@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E8508280-007E-4E79-A9C6-4883B2156BC8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WMR100.NET</RootNamespace>
+    <AssemblyName>WMR100.NET</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="LibUsbDotNet.LibUsbDotNet, Version=2.2.9.110, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\LibUsbDotNet.LibUsbDotNet.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Helpers\ByteArrayUtils.cs" />
+    <Compile Include="Data\Timestamp\ITimestampProvider.cs" />
+    <Compile Include="Data\Timestamp\SystemClockTimestampProvider.cs" />
+    <Compile Include="Helpers\VidPidDescriptor.cs" />
+    <Compile Include="DataDecodeErrorEventArgs.cs" />
+    <Compile Include="DataErrorEventArgs.cs" />
+    <Compile Include="Data\Wmr100DataFrameAssembler.cs" />
+    <Compile Include="Data\Wmr100DataFrame.cs" />
+    <Compile Include="IWmr100Device.cs" />
+    <Compile Include="SensorData\RFClockSignalLevelStatus.cs" />
+    <Compile Include="WmrUsbSetupPacket.cs" />
+    <None Include="app.config" />
+    <Compile Include="SensorData\BatteryLevelStatus.cs" />
+    <Compile Include="SensorData\RFClockSyncStatus.cs" />
+    <Compile Include="SensorData\PowerConnectorStatus.cs" />
+    <Compile Include="SensorData\Wmr100SensorType.cs" />
+    <Compile Include="SensorData\ClockData.cs" />
+    <Compile Include="SensorData\IWmr100SensorData.cs" />
+    <Compile Include="Data\IWmr100Data.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SensorData\ComfortLevelType.cs" />
+    <Compile Include="SensorData\TrendType.cs" />
+    <Compile Include="IWmrUsbDevice.cs" />
+    <Compile Include="DataRecievedEventArgs.cs" />
+    <Compile Include="Data\Wmr100DataType.cs" />
+    <Compile Include="Wmr100Device.cs" />
+    <Compile Include="Data\Wmr100Data.cs" />
+    <Compile Include="SensorData\TemperatureHumidityData.cs" />
+    <Compile Include="SensorData\Wmr100SensorData.cs" />
+    <Compile Include="WmrUsbDevice.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
