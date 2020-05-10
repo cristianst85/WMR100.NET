@@ -2,7 +2,6 @@
 using System.IO;
 using System.Threading;
 using WMR100.NET.Data;
-using WMR100.NET.Data.Timestamp;
 using WMR100.NET.Helpers;
 
 namespace WMR100.NET
@@ -60,7 +59,8 @@ namespace WMR100.NET
                         if (checksumValid && lengthValid)
                         {
                             Wmr100Data wmr100Data = null;
-                            bool success = Wmr100Data.TryDecode(dataFrame.GetPacketData(), out wmr100Data, new SystemClockTimestampProvider());
+
+                            bool success = Wmr100Data.TryDecode(dataFrame.GetPacketData(), out wmr100Data);
 
                             if (success)
                             {

@@ -3,7 +3,6 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using WMR100.NET.Data;
-using WMR100.NET.Data.Timestamp;
 using WMR100.NET.Helpers;
 using WMR100.NET.SensorData;
 
@@ -19,12 +18,8 @@ namespace WMR100.NET.Tests.Data
         [Test, TestCaseSource("TestCases")]
         public void TryDecode(string packet, Wmr100Data expectedResult)
         {
-
-            var timestampProviderMoq = new Mock<ITimestampProvider>();
-            timestampProviderMoq.Setup(x => x.Timestamp).Returns(timestamp);
-
             Wmr100Data wmr100Data = null;
-            bool success = Wmr100Data.TryDecode(ByteArrayUtils.StringToByteArray(packet), out wmr100Data, timestampProviderMoq.Object);
+            bool success = Wmr100Data.TryDecode(ByteArrayUtils.StringToByteArray(packet), out wmr100Data);
 
             Console.WriteLine("Actual result: " + Newtonsoft.Json.JsonConvert.SerializeObject(wmr100Data));
             Console.WriteLine("Expected result: " + Newtonsoft.Json.JsonConvert.SerializeObject(expectedResult));

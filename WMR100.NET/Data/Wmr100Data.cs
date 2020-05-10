@@ -1,5 +1,4 @@
 using System;
-using WMR100.NET.Data.Timestamp;
 using WMR100.NET.SensorData;
 
 namespace WMR100.NET.Data
@@ -18,7 +17,7 @@ namespace WMR100.NET.Data
         public virtual Wmr100DataType Type { get; private set; }
         public DateTime Timestamp { get; protected set; }
 
-        public static bool TryDecode(byte[] packetData, out Wmr100Data wmr100Data, ITimestampProvider timestampProvider)
+        public static bool TryDecode(byte[] packetData, out Wmr100Data wmr100Data)
         {
             wmr100Data = null;
             byte dataType = packetData[1];
@@ -48,7 +47,6 @@ namespace WMR100.NET.Data
                 ClockData clockData = new ClockData(clock, timeZoneOffset, isPowered, hasLowBattery, isRFSyncEnabled, isRFLevelStrong);
 
                 wmr100Data = clockData;
-                wmr100Data.Timestamp = timestampProvider.Timestamp;
                 return true;
             }
             else if (dataType == (byte)Wmr100DataType.TemperatureHumidity)
@@ -90,7 +88,6 @@ namespace WMR100.NET.Data
                 TemperatureHumidityData temperatureHumidityData = new TemperatureHumidityData(sensorId, temperature, temperatureTrend, humidity, humidityTrend,  dewPoint, comfortLevel, heatIndex, hasLowBattery);
 
                 wmr100Data = temperatureHumidityData;
-                wmr100Data.Timestamp = timestampProvider.Timestamp;
                 return true;
             }
             else

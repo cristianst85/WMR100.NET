@@ -1,7 +1,6 @@
 ﻿using LibUsbDotNet;
 using System;
 using WMR100.NET.Data;
-using WMR100.NET.Data.Timestamp;
 using WMR100.NET.Helpers;
 
 namespace WMR100.NET.Example
@@ -73,7 +72,8 @@ namespace WMR100.NET.Example
             Console.WriteLine(string.Format("Data received: {0}", ByteArrayUtils.ByteArrayToString(e.PacketData)));
 
             Wmr100Data wmr100Data = null;
-            if (Wmr100Data.TryDecode(e.PacketData, out wmr100Data, new SystemClockTimestampProvider()))
+
+            if (Wmr100Data.TryDecode(e.PacketData, out wmr100Data))
             {
                 Console.WriteLine(string.Format("Decoded data: {0}", Newtonsoft.Json.JsonConvert.SerializeObject(wmr100Data)));
             }

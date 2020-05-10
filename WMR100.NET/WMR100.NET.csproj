@@ -45,8 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\ByteArrayUtils.cs" />
-    <Compile Include="Data\Timestamp\ITimestampProvider.cs" />
-    <Compile Include="Data\Timestamp\SystemClockTimestampProvider.cs" />
     <Compile Include="Helpers\VidPidDescriptor.cs" />
     <Compile Include="DataDecodeErrorEventArgs.cs" />
     <Compile Include="DataErrorEventArgs.cs" />
