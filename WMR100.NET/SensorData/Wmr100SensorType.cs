@@ -3,6 +3,7 @@
     public enum Wmr100SensorType
     {
         Console,
+
         External
     }
 }

@@ -8,7 +8,6 @@ namespace WMR100.NET.Tests.Data
     [TestFixture]
     public class Wmr100DataFrameTests
     {
-
         [TestCase("FFFF40600000380204061102F700", true)]
         [TestCase("FFFF404200150129003000302101", true)]
         [TestCase("FFFF404200150129003000312101", false)]

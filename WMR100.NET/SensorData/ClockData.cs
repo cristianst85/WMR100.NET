@@ -12,11 +12,17 @@ namespace WMR100.NET.SensorData
                 return Wmr100DataType.Clock;
             }
         }
+
         public DateTime Clock { get; private set; }
+
         public int TimeZoneOffset { get; private set; }
+
         public PowerConnectorStatus PowerConnectorStatus { get; private set; }
+
         public BatteryLevelStatus BatteryLevelStatus { get; private set; }
+
         public RFClockSyncStatus RFClockSyncStatus { get; private set; }
+
         public RFClockSignalLevelStatus RFClockSignalLevelStatus { get; private set; }
 
         public ClockData(DateTime clock, int timeZoneOffset, PowerConnectorStatus powerConnectorStatus, BatteryLevelStatus batteryLevelStatus, RFClockSyncStatus rfClockSyncStatus, RFClockSignalLevelStatus rfClockSignalLevelStatus)
@@ -46,8 +52,16 @@ namespace WMR100.NET.SensorData
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
             return Equals(obj as ClockData);
         }
 
@@ -57,16 +71,13 @@ namespace WMR100.NET.SensorData
             {
                 return false;
             }
-            else
-            {
-                return
-                    Clock == other.Clock &&
-                    TimeZoneOffset == other.TimeZoneOffset &&
-                    PowerConnectorStatus == other.PowerConnectorStatus &&
-                    BatteryLevelStatus == other.BatteryLevelStatus &&
-                    RFClockSyncStatus == other.RFClockSyncStatus &&
-                    RFClockSignalLevelStatus == other.RFClockSignalLevelStatus;
-            }
+
+            return Clock == other.Clock &&
+                TimeZoneOffset == other.TimeZoneOffset &&
+                PowerConnectorStatus == other.PowerConnectorStatus &&
+                BatteryLevelStatus == other.BatteryLevelStatus &&
+                RFClockSyncStatus == other.RFClockSyncStatus &&
+                RFClockSignalLevelStatus == other.RFClockSignalLevelStatus;
         }
     }
 }

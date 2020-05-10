@@ -2,8 +2,8 @@
 {
     public sealed class VidPidDescriptor
     {
-
         public Descriptor Vendor { get; private set; }
+
         public Descriptor Product { get; private set; }
 
         private VidPidDescriptor(ushort vendorId, ushort productId, string vendorName, string productName)
@@ -29,6 +29,7 @@
     public sealed class Descriptor
     {
         public ushort Id { get; private set; }
+
         public string Name { get; private set; }
 
         internal Descriptor(ushort id, string name)

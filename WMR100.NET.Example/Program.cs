@@ -10,14 +10,13 @@ namespace WMR100.NET.Example
         public static void Main(string[] args)
         {
             Type t = Type.GetType("Mono.Runtime");
-            if (t != null)
-            {
-                initMono();
-            }
-            else
+
+            if (t == null)
             {
                 throw new NotImplementedException();
             }
+
+            initMono();
         }
 
         private static void initMono()
@@ -28,10 +27,13 @@ namespace WMR100.NET.Example
             using (var wmrUsbDevice = WmrUsbDevice.Create())
             {
                 var wmr100Device = new Wmr100Device(wmrUsbDevice);
+
                 wmr100Device.Init();
+
                 wmr100Device.DataRecieved += Wmr100Device_DataRecieved;
                 wmr100Device.DataError += Wmr100Device_DataError;
                 wmr100Device.Error += Wmr100Device_Error;
+
                 wmr100Device.ReceiveData();
             }
         }
@@ -43,27 +45,28 @@ namespace WMR100.NET.Example
 
         private static void Wmr100Device_Error(object sender, System.IO.ErrorEventArgs e)
         {
-            Console.WriteLine(String.Format("Device error. Exception: {0}", e.GetException()));
-            Wmr100Device wmr100Device = sender as Wmr100Device;
+            Console.WriteLine(string.Format("Device error. Exception: {0}", e.GetException()));
+
+            var wmr100Device = sender as Wmr100Device;
+
+            if (wmr100Device != null)
             {
-                if (wmr100Device != null)
-                {
-                    Console.WriteLine("Stopping device...");
-                    wmr100Device.Stop();
-                }
+                Console.WriteLine("Stopping device...");
+                wmr100Device.Stop();
             }
         }
 
         private static void Wmr100Device_DataError(object sender, DataErrorEventArgs e)
         {
             var hexFrameData = ByteArrayUtils.ByteArrayToString(e.FrameData);
+
             if (!e.ChecksumValid)
             {
-                Console.WriteLine(String.Format("Bad data frame: {0} (invalid checksum)", hexFrameData));
+                Console.WriteLine(string.Format("Bad data frame: {0} (invalid checksum)", hexFrameData));
             }
             else if (!e.LengthValid)
             {
-                Console.WriteLine(String.Format("Bad data frame: {0} (invalid length)", hexFrameData));
+                Console.WriteLine(string.Format("Bad data frame: {0} (invalid length)", hexFrameData));
             }
         }
 

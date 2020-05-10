@@ -34,7 +34,6 @@ namespace WMR100.NET.Data
     /// </summary>
     public class Wmr100DataFrame
     {
-
         public static readonly byte Delimiter = 0xff;
 
         public byte[] Data { get; private set; }
@@ -47,63 +46,69 @@ namespace WMR100.NET.Data
         public bool IsChecksumValid()
         {
             int computedChecksum = 0;
+
             for (int i = 2; i < Data.Length - 2; i++)
             {
                 computedChecksum += (int)(Data[i]);
             }
+
             int frameChecksum = (((int)Data[Data.Length - 1]) << 8) + ((int)Data[Data.Length - 2]);
+
             return frameChecksum == computedChecksum;
         }
 
         public bool IsLengthValid()
         {
-            var packetLength = Data.Length - 2; // Length without the two frame delimiters.
+            // Length without the two frame delimiters.
+            var packetLength = Data.Length - 2;
+
             if (packetLength < 0)
             {
                 return false;
             }
+
+            var dataType = (byte)Data[3];
+
+            if (dataType == (byte)Wmr100DataType.Rain && packetLength == 17)
+            {
+                return true;
+            }
+            else if (dataType == (byte)Wmr100DataType.TemperatureHumidity && packetLength == 12)
+            {
+                return true;
+            }
+            else if (dataType == (byte)Wmr100DataType.TemperatureWater && packetLength == 7)
+            {
+                return true;
+            }
+            else if (dataType == (byte)Wmr100DataType.Pressure && packetLength == 8)
+            {
+                return true;
+            }
+            else if (dataType == (byte)Wmr100DataType.UV && packetLength == 5)
+            {
+                return true;
+            }
+            else if (dataType == (byte)Wmr100DataType.Wind && packetLength == 11)
+            {
+                return true;
+            }
+            else if (dataType == (byte)Wmr100DataType.Clock && packetLength == 12)
+            {
+                return true;
+            }
             else
             {
-                var dataType = (byte)Data[3];
-                if (dataType == (byte)Wmr100DataType.Rain && packetLength == 17)
-                {
-                    return true;
-                }
-                else if (dataType == (byte)Wmr100DataType.TemperatureHumidity && packetLength == 12)
-                {
-                    return true;
-                }
-                else if (dataType == (byte)Wmr100DataType.TemperatureWater && packetLength == 7)
-                {
-                    return true;
-                }
-                else if (dataType == (byte)Wmr100DataType.Pressure && packetLength == 8)
-                {
-                    return true;
-                }
-                else if (dataType == (byte)Wmr100DataType.UV && packetLength == 5)
-                {
-                    return true;
-                }
-                else if (dataType == (byte)Wmr100DataType.Wind && packetLength == 11)
-                {
-                    return true;
-                }
-                else if (dataType == (byte)Wmr100DataType.Clock && packetLength == 12)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return false;
             }
         }
 
         public byte[] GetPacketData()
         {
             var packetData = new byte[Data.Length - 4];
+
             Array.Copy(Data, 2, packetData, 0, packetData.Length);
+
             return packetData;
         }
     }

@@ -8,12 +8,13 @@ namespace WMR100.NET
 {
 
     public delegate void DataRecievedEventHandler(object sender, DataRecievedEventArgs e);
+
     public delegate void DataDecodeErrorEventHandler(object sender, DataDecodeErrorEventArgs e);
+
     public delegate void DataErrorEventHandler(object sender, DataErrorEventArgs e);
 
     public class Wmr100Device : IWmr100Device
     {
-
         public static readonly VidPidDescriptor Descriptor = VidPidDescriptor.Wmr100;
 
         private static readonly byte[] initRequest = { 0x20, 0x00, 0x08, 0x01, 0x00, 0x00, 0x00, 0x00 };
@@ -97,10 +98,12 @@ namespace WMR100.NET
                 catch (Exception ex)
                 {
                     ErrorEventHandler handler = Error;
+
                     if (handler != null)
                     {
                         handler(this, new ErrorEventArgs(ex));
                     }
+
                     Thread.Sleep(1000);
                 }
             }

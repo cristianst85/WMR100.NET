@@ -3,6 +3,7 @@
     public enum PowerConnectorStatus
     {
         NotConnected = 0,
-        Connected = 1,
+
+        Connected = 1
     }
 }

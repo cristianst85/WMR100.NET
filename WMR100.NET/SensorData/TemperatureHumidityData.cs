@@ -5,18 +5,27 @@ namespace WMR100.NET.SensorData
 {
     public class TemperatureHumidityData : Wmr100SensorData, IEquatable<TemperatureHumidityData>
     {
-        public override Wmr100DataType Type {
-            get {
+        public override Wmr100DataType Type
+        {
+            get
+            {
                 return Wmr100DataType.TemperatureHumidity;
             }
         }
+
         public decimal Temperature { get; private set; }
+
         public TrendType TemperatureTrend { get; private set; }
-        public decimal Humidity { get; private set;  }
+
+        public decimal Humidity { get; private set; }
+
         public TrendType HumidityTrend { get; private set; }
+
         public decimal DewPoint { get; private set; }
+
         public ComfortLevelType ComfortLevel { get; private set; }
-        public decimal? HeatIndex { get; private set;  }
+
+        public decimal? HeatIndex { get; private set; }
 
         public TemperatureHumidityData(int sensorId, decimal temperature, TrendType temperatureTrend, decimal humidity, TrendType humidityTrend, decimal dewPoint, ComfortLevelType comfortLevel, decimal? heatIndex, BatteryLevelStatus batteryLevelStatus)
         {
@@ -51,8 +60,16 @@ namespace WMR100.NET.SensorData
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
             return Equals(obj as TemperatureHumidityData);
         }
 
@@ -62,19 +79,16 @@ namespace WMR100.NET.SensorData
             {
                 return false;
             }
-            else
-            {
-                return
-                    SensorId == other.SensorId &&
-                    Temperature == other.Temperature &&
-                    TemperatureTrend == other.TemperatureTrend &&
-                    Humidity == other.Humidity &&
-                    HumidityTrend == other.HumidityTrend &&
-                    DewPoint == other.DewPoint &&
-                    ComfortLevel == other.ComfortLevel &&
-                    HeatIndex == other.HeatIndex && // TODO: proper comparision for nullable type
-                    BatteryLevelStatus == other.BatteryLevelStatus;
-            }
+
+            return SensorId == other.SensorId &&
+                Temperature == other.Temperature &&
+                TemperatureTrend == other.TemperatureTrend &&
+                Humidity == other.Humidity &&
+                HumidityTrend == other.HumidityTrend &&
+                DewPoint == other.DewPoint &&
+                ComfortLevel == other.ComfortLevel &&
+                HeatIndex == other.HeatIndex &&
+                BatteryLevelStatus == other.BatteryLevelStatus;
         }
     }
 }

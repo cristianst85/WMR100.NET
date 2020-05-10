@@ -7,7 +7,6 @@ namespace WMR100.NET.Data
 {
     public class Wmr100DataFrameAssembler
     {
-
         private byte[] buffer = new byte[256];
         private int bufferPos = -1;
 
@@ -33,6 +32,7 @@ namespace WMR100.NET.Data
             while (true)
             {
                 int dataFrameStartPos = -1;
+
                 for (int i = 0; i < (bufferPos - 2); i++)
                 {
                     if (buffer[i] == Wmr100DataFrame.Delimiter && buffer[i + 1] == Wmr100DataFrame.Delimiter)
@@ -41,6 +41,7 @@ namespace WMR100.NET.Data
                         break;
                     }
                 }
+
                 if (dataFrameStartPos < 0)
                 {
                     Debug.WriteLine("Not enough data available.");
@@ -54,6 +55,7 @@ namespace WMR100.NET.Data
                 }
 
                 int dataFrameEndPos = -1;
+
                 for (int i = dataFrameStartPos + 1; i < (bufferPos - 2); i++)
                 {
                     if (buffer[i] == Wmr100DataFrame.Delimiter && buffer[i + 1] == Wmr100DataFrame.Delimiter)
@@ -70,6 +72,7 @@ namespace WMR100.NET.Data
                 }
 
                 int len = dataFrameEndPos - dataFrameStartPos;
+
                 if (len == 0)
                 {
                     Debug.WriteLine(string.Format("Ignored zero length data frame."));
@@ -80,10 +83,12 @@ namespace WMR100.NET.Data
                     Array.Copy(buffer, dataFrameStartPos, data, 0, len);
                     dataFrames.Add(new Wmr100DataFrame(data));
                 }
+
                 Array.Copy(buffer, dataFrameEndPos, buffer, 0, bufferPos - dataFrameEndPos + 1);
                 bufferPos -= dataFrameEndPos;
                 Array.Clear(buffer, bufferPos + 1, buffer.Length - bufferPos - 1);
             }
+
             return dataFrames;
         }
     }

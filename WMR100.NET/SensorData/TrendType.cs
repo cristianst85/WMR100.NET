@@ -3,7 +3,9 @@
     public enum TrendType
     {
         Steady = 0,
+
         Rising = 1,
-        Falling = 2,
+
+        Falling = 2
     }
 }

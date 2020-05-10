@@ -14,7 +14,6 @@ namespace WMR100.NET.Tests.Data
     [TestFixture]
     public class DataPacketAssemblerTest
     {
-
         [Test, TestCaseSource("TestCases")]
         public void AssemblePacket(ICollection<string> usbDataBlocks, ICollection<string> expectedFrames)
         {
@@ -44,6 +43,7 @@ namespace WMR100.NET.Tests.Data
         private static IEnumerable TestCases()
         {
             yield return new TestCaseData(new Collection<string> { }, new Collection<string> { });
+
             yield return new TestCaseData(
                 new Collection<string> {
                     "0629003000302100",

@@ -3,6 +3,7 @@
     public enum RFClockSignalLevelStatus
     {
         Weak = 0,
+
         Strong = 1
     }
 }

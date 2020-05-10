@@ -5,7 +5,6 @@ using System.Linq;
 
 namespace WMR100.NET.Helpers
 {
-
     public static class ByteArrayUtils
     {
         public static string ByteArrayToString(byte[] bytes)
@@ -24,10 +23,12 @@ namespace WMR100.NET.Helpers
         public static ICollection<byte[]> StringToByteArray(ICollection<string> hexStrings)
         {
             var bytes = new Collection<byte[]>();
+
             foreach (var hexString in hexStrings)
             {
                 bytes.Add(StringToByteArray(hexString));
             };
+
             return bytes;
         }
     }

@@ -15,9 +15,11 @@ namespace WMR100.NET.Data
     public abstract class Wmr100Data : IWmr100Data
     {
         public virtual Wmr100DataType Type { get; private set; }
+
         public static bool TryDecode(byte[] packetData, out Wmr100Data wmr100Data)
         {
             wmr100Data = null;
+
             byte dataType = packetData[1];
 
             if (dataType == (byte)Wmr100DataType.Clock)
@@ -41,10 +43,11 @@ namespace WMR100.NET.Data
                     timeZoneOffset = timeZoneOffset - 256;
                 }
 
-                DateTime clock = new DateTime(year, month, day, hour, minute, 0, DateTimeKind.Local);
-                ClockData clockData = new ClockData(clock, timeZoneOffset, isPowered, hasLowBattery, isRFSyncEnabled, isRFLevelStrong);
+                var clock = new DateTime(year, month, day, hour, minute, 0, DateTimeKind.Local);
+                var clockData = new ClockData(clock, timeZoneOffset, isPowered, hasLowBattery, isRFSyncEnabled, isRFLevelStrong);
 
                 wmr100Data = clockData;
+
                 return true;
             }
             else if (dataType == (byte)Wmr100DataType.TemperatureHumidity)
@@ -66,7 +69,7 @@ namespace WMR100.NET.Data
 
                 decimal humidity = packetData[5];
 
-                // DewPoint on Channel 0 is not provided (i.e.: always 0) for Oregon Scientific RMS600.
+                // DewPoint on Channel 0 is not provided (i.e. always 0) for Oregon Scientific RMS600.
                 decimal dewPoint = (packetData[6] + ((packetData[7] & 0x0f) << 8)) / 10.0m;
 
                 if ((packetData[7] >> 4) == 0x8)
@@ -79,13 +82,14 @@ namespace WMR100.NET.Data
                 decimal? heatIndex = null;
                 if (isHeatIndexValid)
                 {
-                	// HeatIndex is in Fahrenheit.
+                    // HeatIndex is in Fahrenheit.
                     heatIndex = (packetData[8] + ((packetData[9] & 0x0f) << 8)) / 10.0m;
                 }
 
-                TemperatureHumidityData temperatureHumidityData = new TemperatureHumidityData(sensorId, temperature, temperatureTrend, humidity, humidityTrend,  dewPoint, comfortLevel, heatIndex, hasLowBattery);
+                TemperatureHumidityData temperatureHumidityData = new TemperatureHumidityData(sensorId, temperature, temperatureTrend, humidity, humidityTrend, dewPoint, comfortLevel, heatIndex, hasLowBattery);
 
                 wmr100Data = temperatureHumidityData;
+
                 return true;
             }
             else
