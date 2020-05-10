@@ -19,7 +19,7 @@ namespace WMR100.NET.SensorData
         public RFClockSyncStatus RFClockSyncStatus { get; private set; }
         public RFClockSignalLevelStatus RFClockSignalLevelStatus { get; private set; }
 
-        public ClockData(DateTime clock, int timeZoneOffset, PowerConnectorStatus powerConnectorStatus, BatteryLevelStatus batteryLevelStatus, RFClockSyncStatus rfClockSyncStatus, RFClockSignalLevelStatus rfClockSignalLevelStatus, DateTime timestamp)
+        public ClockData(DateTime clock, int timeZoneOffset, PowerConnectorStatus powerConnectorStatus, BatteryLevelStatus batteryLevelStatus, RFClockSyncStatus rfClockSyncStatus, RFClockSignalLevelStatus rfClockSignalLevelStatus)
         {
             this.Clock = clock;
             this.TimeZoneOffset = timeZoneOffset;
@@ -27,7 +27,6 @@ namespace WMR100.NET.SensorData
             this.BatteryLevelStatus = batteryLevelStatus;
             this.RFClockSyncStatus = rfClockSyncStatus;
             this.RFClockSignalLevelStatus = rfClockSignalLevelStatus;
-            this.Timestamp = timestamp;
         }
 
         public ClockData(DateTime clock, int timeZoneOffset, bool isPowered, bool hasLowBattery, bool isRFSyncEnabled, bool isRFLevelStrong)
@@ -66,8 +65,7 @@ namespace WMR100.NET.SensorData
                     PowerConnectorStatus == other.PowerConnectorStatus &&
                     BatteryLevelStatus == other.BatteryLevelStatus &&
                     RFClockSyncStatus == other.RFClockSyncStatus &&
-                    RFClockSignalLevelStatus == other.RFClockSignalLevelStatus &&
-                    Timestamp == other.Timestamp;
+                    RFClockSignalLevelStatus == other.RFClockSignalLevelStatus;
             }
         }
     }

@@ -15,8 +15,6 @@ namespace WMR100.NET.Data
     public abstract class Wmr100Data : IWmr100Data
     {
         public virtual Wmr100DataType Type { get; private set; }
-        public DateTime Timestamp { get; protected set; }
-
         public static bool TryDecode(byte[] packetData, out Wmr100Data wmr100Data)
         {
             wmr100Data = null;

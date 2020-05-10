@@ -18,7 +18,7 @@ namespace WMR100.NET.SensorData
         public ComfortLevelType ComfortLevel { get; private set; }
         public decimal? HeatIndex { get; private set;  }
 
-        public TemperatureHumidityData(int sensorId, decimal temperature, TrendType temperatureTrend, decimal humidity, TrendType humidityTrend, decimal dewPoint, ComfortLevelType comfortLevel, decimal? heatIndex, BatteryLevelStatus batteryLevelStatus, DateTime timestamp)
+        public TemperatureHumidityData(int sensorId, decimal temperature, TrendType temperatureTrend, decimal humidity, TrendType humidityTrend, decimal dewPoint, ComfortLevelType comfortLevel, decimal? heatIndex, BatteryLevelStatus batteryLevelStatus)
         {
             this.SensorId = sensorId;
             this.Temperature = temperature;
@@ -29,7 +29,6 @@ namespace WMR100.NET.SensorData
             this.ComfortLevel = comfortLevel;
             this.HeatIndex = heatIndex;
             this.BatteryLevelStatus = batteryLevelStatus;
-            this.Timestamp = timestamp;
         }
 
         public TemperatureHumidityData(int sensorId, decimal temperature, int temperatureTrend, decimal humidity, int humidityTrend, decimal dewPoint, int comfortLevel, decimal? heatIndex, bool hasLowBattery)
@@ -74,8 +73,7 @@ namespace WMR100.NET.SensorData
                     DewPoint == other.DewPoint &&
                     ComfortLevel == other.ComfortLevel &&
                     HeatIndex == other.HeatIndex && // TODO: proper comparision for nullable type
-                    BatteryLevelStatus == other.BatteryLevelStatus &&
-                    Timestamp == other.Timestamp;
+                    BatteryLevelStatus == other.BatteryLevelStatus;
             }
         }
     }
