@@ -69,7 +69,7 @@ namespace WMR100.NET.Data
 
                 decimal humidity = packetData[5];
 
-                // DewPoint on Channel 0 is not provided (i.e. always 0) for Oregon Scientific RMS600.
+                // Dew point on Channel 0 is not provided (i.e. always 0) by Oregon Scientific RMS600.
                 decimal dewPoint = (packetData[6] + ((packetData[7] & 0x0f) << 8)) / 10.0m;
 
                 if ((packetData[7] >> 4) == 0x8)
@@ -82,7 +82,7 @@ namespace WMR100.NET.Data
                 decimal? heatIndex = null;
                 if (isHeatIndexValid)
                 {
-                    // HeatIndex is in Fahrenheit.
+                    // Heat index is in Fahrenheit.
                     heatIndex = (packetData[8] + ((packetData[9] & 0x0f) << 8)) / 10.0m;
                 }
 
