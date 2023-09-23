@@ -49,6 +49,7 @@ namespace WMR100.NET
                 try
                 {
                     var dataFrames = dataFrameAssembler.Assemble(wmrUsbDevice.Read());
+
                     foreach (var dataFrame in dataFrames)
                     {
                         // Verify frame checksum.
@@ -65,28 +66,16 @@ namespace WMR100.NET
 
                             if (success)
                             {
-                                DataRecievedEventHandler handler = DataRecieved;
-                                if (handler != null)
-                                {
-                                    handler(this, new DataRecievedEventArgs(dataFrame.GetPacketData(), wmr100Data));
-                                }
+                                DataRecieved?.Invoke(this, new DataRecievedEventArgs(dataFrame.GetPacketData(), wmr100Data));
                             }
                             else
                             {
-                                DataDecodeErrorEventHandler handler = DataDecodeError;
-                                if (handler != null)
-                                {
-                                    handler(this, new DataDecodeErrorEventArgs(dataFrame.GetPacketData()));
-                                }
+                                DataDecodeError?.Invoke(this, new DataDecodeErrorEventArgs(dataFrame.GetPacketData()));
                             }
                         }
                         else
                         {
-                            DataErrorEventHandler handler = DataError;
-                            if (handler != null)
-                            {
-                                handler(this, new DataErrorEventArgs(dataFrame.Data, checksumValid, lengthValid));
-                            }
+                            DataError?.Invoke(this, new DataErrorEventArgs(dataFrame.Data, checksumValid, lengthValid));
                         }
                     }
 
@@ -97,12 +86,7 @@ namespace WMR100.NET
                 }
                 catch (Exception ex)
                 {
-                    ErrorEventHandler handler = Error;
-
-                    if (handler != null)
-                    {
-                        handler(this, new ErrorEventArgs(ex));
-                    }
+                    Error?.Invoke(this, new ErrorEventArgs(ex));
 
                     Thread.Sleep(1000);
                 }
