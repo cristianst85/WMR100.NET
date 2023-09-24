@@ -1,5 +1,7 @@
 ﻿using LibUsbDotNet;
+using Newtonsoft.Json;
 using System;
+using System.IO;
 using WMR100.NET.Helpers;
 
 namespace WMR100.NET.ConsoleDemo
@@ -16,6 +18,7 @@ namespace WMR100.NET.ConsoleDemo
         {
             // Subscribe to this event to see the errors from low-level API.
             UsbDevice.UsbErrorEvent += UsbDevice_UsbErrorEvent;
+            WmrUsbDevice.Log += (message) => LogToConsole(message);
 
             using (var wmrUsbDevice = WmrUsbDevice.Create())
             {
@@ -33,16 +36,16 @@ namespace WMR100.NET.ConsoleDemo
 
         private static void UsbDevice_UsbErrorEvent(object sender, UsbError e)
         {
-            Console.WriteLine(string.Format("USB device error: {0} {1} {2} {3}", e.ErrorCode, e.Description, e.Win32ErrorNumber, e.Win32ErrorString));
+            LogToConsole($"USB device error: {e.ErrorCode} {e.Description} {e.Win32ErrorNumber} {e.Win32ErrorString}");
         }
 
-        private static void Wmr100Device_Error(object sender, System.IO.ErrorEventArgs e)
+        private static void Wmr100Device_Error(object sender, ErrorEventArgs e)
         {
-            Console.WriteLine(string.Format("Device error. Exception: {0}", e.GetException()));
+            LogToConsole($"Device error. Exception: {e.GetException()}");
 
             if (sender is Wmr100Device wmr100Device)
             {
-                Console.WriteLine("Stopping device...");
+                LogToConsole("Stopping device...");
                 wmr100Device.Stop();
             }
         }
@@ -53,26 +56,31 @@ namespace WMR100.NET.ConsoleDemo
 
             if (!e.ChecksumValid)
             {
-                Console.WriteLine(string.Format("Bad data frame: {0} (invalid checksum)", hexFrameData));
+                LogToConsole($"Bad data frame: {hexFrameData} (invalid checksum)");
             }
             else if (!e.LengthValid)
             {
-                Console.WriteLine(string.Format("Bad data frame: {0} (invalid length)", hexFrameData));
+                LogToConsole($"Bad data frame: {hexFrameData} (invalid length)");
             }
         }
 
         private static void Wmr100Device_DataReceived(object sender, DataReceivedEventArgs e)
         {
-            Console.WriteLine(string.Format("Data received: {0}", ByteArrayUtils.ByteArrayToString(e.PacketData)));
+            LogToConsole($"Data received: {ByteArrayUtils.ByteArrayToString(e.PacketData)}");
 
             if (Wmr100Data.TryDecode(e.PacketData, out Wmr100Data wmr100Data))
             {
-                Console.WriteLine(string.Format("Decoded data: {0}", Newtonsoft.Json.JsonConvert.SerializeObject(wmr100Data)));
+                LogToConsole($"Decoded data: {JsonConvert.SerializeObject(wmr100Data)}");
             }
             else
             {
-                Console.WriteLine("Cannot decode data!");
+                LogToConsole($"Cannot decode data.");
             }
+        }
+
+        private static void LogToConsole(string message)
+        {
+            Console.WriteLine(message);
         }
     }
 }

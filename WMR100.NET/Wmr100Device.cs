@@ -83,7 +83,6 @@ namespace WMR100.NET
                 catch (Exception ex)
                 {
                     Error?.Invoke(this, new ErrorEventArgs(ex));
-
                     Thread.Sleep(1000);
                 }
             }

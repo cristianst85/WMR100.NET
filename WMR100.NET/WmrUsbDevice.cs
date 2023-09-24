@@ -8,6 +8,8 @@ namespace WMR100.NET
 {
     public class WmrUsbDevice : IDisposable, IWmrUsbDevice
     {
+        public static Action<string> Log;
+
         private UsbDevice usbDevice;
         private UsbEndpointReader usbEndpointReader;
 
@@ -20,27 +22,33 @@ namespace WMR100.NET
                 var descriptor = Wmr100Device.Descriptor;
                 var usbDeviceFinder = new UsbDeviceFinder(descriptor.Vendor.Id, descriptor.Product.Id);
 
+                InternalLog("Opening USB device...");
                 usbDevice = UsbDevice.OpenUsbDevice(usbDeviceFinder);
 
                 if (usbDevice is MonoUsbDevice monoUsbDevice)
                 {
+                    InternalLog("Opening USB device handle...");
                     var monoUsbDeviceHandle = monoUsbDevice.Profile.OpenDeviceHandle();
-                    Console.WriteLine("Setting auto detach kernel driver true...");
+
+                    InternalLog("Enabling auto detach kernel driver...");
                     MonoUsbApi.SetAutoDetachKernelDriver(monoUsbDeviceHandle, 1);
+
+                    InternalLog("Determine if kernel driver is active on interface #0...");
                     int kernelDriverStatus = MonoUsbApi.KernelDriverActive(monoUsbDeviceHandle, 0);
 
                     if (kernelDriverStatus == 1)
                     {
-                        Console.WriteLine("Kernel driver is active. Detaching...");
+                        InternalLog("Kernel driver is active on interface #0. Detaching...");
                         int errorCode = MonoUsbApi.DetachKernelDriver(monoUsbDeviceHandle, 0);
+
                         if (errorCode != 0)
                         {
-                            throw new Exception(string.Format("Failed to detach kernel driver (error code: {0}).", errorCode));
+                            throw new Exception($"Failed to detach kernel driver (error code: {errorCode}).");
                         }
                     }
                     else if (kernelDriverStatus < 0)
                     {
-                        throw new Exception(string.Format("Failed to get kernel driver status (error code: {0}).", kernelDriverStatus));
+                        throw new Exception($"Failed to get kernel driver status (error code: {kernelDriverStatus}).");
                     }
                 }
 
@@ -50,26 +58,27 @@ namespace WMR100.NET
                 }
                 else
                 {
-                    Console.WriteLine("Found device with ID {0:x4}:{1:x4} {2}", usbDevice.Info.Descriptor.VendorID, usbDevice.Info.Descriptor.ProductID, descriptor.GetName());
+                    InternalLog($"Found device with ID {usbDevice.Info.Descriptor.VendorID:x4}:{usbDevice.Info.Descriptor.ProductID:x4} {descriptor.GetName()}");
                     IUsbDevice wholeUsbDevice = usbDevice as IUsbDevice;
 
                     if (!ReferenceEquals(wholeUsbDevice, null))
                     {
-                        // Select configuration #1
+                        // Select configuration #1.
                         bool success = wholeUsbDevice.SetConfiguration(1);
                         if (!success)
                         {
-                            throw new Exception("Failed to set USB device configuration.");
+                            throw new Exception("Failed to set USB device configuration #1.");
                         }
 
                         // Claim interface #0.
                         success = wholeUsbDevice.ClaimInterface(0);
                         if (!success)
                         {
-                            throw new Exception("Failed to claim USB device interface.");
+                            throw new Exception("Failed to claim USB device on interface #0.");
                         }
                     }
 
+                    InternalLog("WMR USB device was successfully instantiated.");
                     return new WmrUsbDevice(usbDevice);
                 }
             }
@@ -83,7 +92,7 @@ namespace WMR100.NET
                         {
                             // Release interface #0.
                             bool success = wholeUsbDevice.ReleaseInterface(0);
-                            Console.WriteLine(string.Format("{0} USB device interface.", success ? "Released" : "Failed to release"));
+                            InternalLog($"{(success ? "Successfully released" : "Failed to release")} USB device interface #0.");
                         }
 
                         usbDevice.Close();
@@ -92,17 +101,17 @@ namespace WMR100.NET
 
                 UsbDevice.Exit();
 
-                Console.WriteLine("De-initialized USB driver.");
+                InternalLog("De-initialized USB driver.");
 
                 MonoUsbEventHandler.Stop(false);
                 MonoUsbEventHandler.Exit();
 
-                Console.WriteLine("Stopped USB event handler thread.");
+                InternalLog("Stopped USB event handler thread.");
                 throw;
             }
         }
         
-        public WmrUsbDevice(UsbDevice UsbDevice)
+        private WmrUsbDevice(UsbDevice UsbDevice)
         {
             this.usbDevice = UsbDevice;
             this.usbEndpointReader = usbDevice.OpenEndpointReader(ReadEndpointID.Ep01);
@@ -116,12 +125,12 @@ namespace WMR100.NET
 
             if (bytesRead == 0)
             {
-                throw new Exception(string.Format("No data read from USB device (error code: {0}).", errorCode));
+                throw new Exception($"No data read from USB device (error code: {errorCode}).");
             }
 
             if (errorCode != ErrorCode.None)
             {
-                throw new Exception(string.Format("Error reading data from USB device (error code: {0}).", errorCode));
+                throw new Exception($"Error reading data from USB device (error code: {errorCode}).");
             }
 
             return buffer;
@@ -171,7 +180,7 @@ namespace WMR100.NET
                                 // Release interface #0.
                                 bool success = wholeUsbDevice.ReleaseInterface(0);
 
-                                Console.WriteLine(string.Format("{0} USB device interface.", success ? "Released" : "Failed to release"));
+                                InternalLog($"{(success ? "Successfully released" : "Failed to release")} USB device interface #0.");
                             }
 
                             usbDevice.Close();
@@ -180,18 +189,23 @@ namespace WMR100.NET
 
                     UsbDevice.Exit();
 
-                    Console.WriteLine("De-initialized USB driver.");
+                    InternalLog("De-initialized USB driver.");
 
                     MonoUsbEventHandler.Stop(false);
                     MonoUsbEventHandler.Exit();
 
-                    Console.WriteLine("Stopped USB event handler thread.");
+                    InternalLog("Stopped USB event handler thread.");
 
                     usbDevice = null;
                     usbEndpointReader = null;
                     disposed = true;
                 }
             }
+        }
+
+        private static void InternalLog(string message)
+        {
+            Log?.Invoke(message);
         }
     }
 }
