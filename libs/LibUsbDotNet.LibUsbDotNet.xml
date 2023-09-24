@@ -482,6 +482,18 @@
             <param name="suffixSeperator">The value suffix string.</param>
             <returns>A formatted representation of the <see cref="T:LibUsbDotNet.Descriptors.UsbInterfaceDescriptor"/>.</returns>
         </member>
+        <member name="T:LibUsbDotNet.DeviceNotify.DeviceNotifier">
+            <summary>
+            Platform independent class for linux/windows device notification.
+            </summary>
+            <code source="..\Examples\Device.Notification\DeviceNotification.cs" lang="cs"/>
+        </member>
+        <member name="M:LibUsbDotNet.DeviceNotify.DeviceNotifier.OpenDeviceNotifier">
+            <summary>
+            Creates a new instance of a device notifier class.
+            </summary>
+            <returns>A <see cref="T:LibUsbDotNet.DeviceNotify.WindowsDeviceNotifier"/> under windows and a <see cref="T:LibUsbDotNet.DeviceNotify.Linux.LinuxDeviceNotifier"/> under linux.</returns>
+        </member>
         <member name="T:LibUsbDotNet.DeviceNotify.DeviceNotifyEventArgs">
             <summary>
             Describes the device notify event
@@ -863,10 +875,10 @@
         <member name="T:LibUsbDotNet.DeviceNotify.Linux.LinuxDeviceNotifier">
             <summary>
              Creates an instance of the <see cref="T:LibUsbDotNet.DeviceNotify.Linux.LinuxDeviceNotifier"/> class.
-             See the <see cref="T:LibUsbDotNet.DeviceNotify.IDeviceNotifier"/> interface or <see cref="!:DeviceNotifier.OpenDeviceNotifier"/> method for more information
+             See the <see cref="T:LibUsbDotNet.DeviceNotify.IDeviceNotifier"/> interface or <see cref="M:LibUsbDotNet.DeviceNotify.DeviceNotifier.OpenDeviceNotifier"/> method for more information
             </summary>
             <remarks>
-            To make your code platform-independent use the <see cref="!:DeviceNotifier.OpenDeviceNotifier"/> method for creating instances.
+            To make your code platform-independent use the <see cref="M:LibUsbDotNet.DeviceNotify.DeviceNotifier.OpenDeviceNotifier"/> method for creating instances.
             </remarks>
         </member>
         <member name="M:LibUsbDotNet.DeviceNotify.Linux.LinuxDeviceNotifier.#ctor(System.String)">
@@ -990,6 +1002,40 @@
             </summary>
             <param name="usbDevice">The open UsbDevice object.</param>
             <returns>True if success.</returns>
+        </member>
+        <member name="T:LibUsbDotNet.DeviceNotify.WindowsDeviceNotifier">
+            <summary>
+            Notifies an application of a change to the hardware Configuration of a device or 
+            the computer. See <see cref="T:LibUsbDotNet.DeviceNotify.IDeviceNotifier"/> or <see cref="M:LibUsbDotNet.DeviceNotify.DeviceNotifier.OpenDeviceNotifier"/> interface for more information
+            </summary>
+            <remarks>
+            This is the windows implementation of the device notifier.
+            </remarks>
+        </member>
+        <member name="M:LibUsbDotNet.DeviceNotify.WindowsDeviceNotifier.#ctor">
+            <summary>
+             Creates an instance of the <see cref="T:LibUsbDotNet.DeviceNotify.WindowsDeviceNotifier"/> class.
+             See the <see cref="T:LibUsbDotNet.DeviceNotify.IDeviceNotifier"/> interface or <see cref="M:LibUsbDotNet.DeviceNotify.DeviceNotifier.OpenDeviceNotifier"/> method for more information
+            </summary>
+            <remarks>
+            To make your code platform-independent use the <see cref="M:LibUsbDotNet.DeviceNotify.DeviceNotifier.OpenDeviceNotifier"/> method for creating instances.
+            </remarks>
+        </member>
+        <member name="P:LibUsbDotNet.DeviceNotify.WindowsDeviceNotifier.Enabled">
+            <summary>
+             Enables/Disables notification events.
+            </summary>
+        </member>
+        <member name="E:LibUsbDotNet.DeviceNotify.WindowsDeviceNotifier.OnDeviceNotify">
+            <summary>
+            Main Notify event for all device notifications.
+            </summary>
+        </member>
+        <member name="M:LibUsbDotNet.DeviceNotify.WindowsDeviceNotifier.Finalize">
+            <summary>
+            Releases the resources associated with this window. 
+            </summary>
+            
         </member>
         <member name="T:LibUsbDotNet.DeviceNotify.WindowsDeviceNotifyEventArgs">
             <summary>
@@ -1280,6 +1326,25 @@
             Regular expression class for parsing USB symbolic names and hardware ids.
             </summary>
         </member>
+        <member name="P:LibUsbDotNet.Internal.WinUsb.SafeLibusbKInterfaceHandle.IsInvalid">
+            <summary>
+            Gets a value indicating whether the <see cref="T:LibUsbDotNet.Internal.WinUsb.SafeLibusbKInterfaceHandle"/> value is invalid.
+            </summary>
+            
+            <returns>
+            true if the <see cref="T:LibUsbDotNet.Internal.WinUsb.SafeLibusbKInterfaceHandle"/> is valid; otherwise, false.
+            </returns>
+        </member>
+        <member name="M:LibUsbDotNet.Internal.WinUsb.SafeLibusbKInterfaceHandle.ReleaseHandle">
+            <summary>
+            Executes the code required to free the <see cref="T:LibUsbDotNet.Internal.WinUsb.SafeLibusbKInterfaceHandle"/>.
+            </summary>
+            
+            <returns>
+            true if the <see cref="T:LibUsbDotNet.Internal.WinUsb.SafeLibusbKInterfaceHandle"/> is released successfully; otherwise, in the event of a catastrophic failure, false. In this case, it generates a ReleaseHandleFailed Managed Debugging Assistant.
+            </returns>
+            
+        </member>
         <member name="P:LibUsbDotNet.Internal.WinUsb.SafeWinUsbInterfaceHandle.IsInvalid">
             <summary>
             Gets a value indicating whether the <see cref="T:LibUsbDotNet.Internal.WinUsb.SafeWinUsbInterfaceHandle"/> value is invalid.
@@ -1315,6 +1380,20 @@
             for usb devices that require it.
             <code source="..\Examples\Read.Write\ReadWrite.cs" lang="cs"/>
             </example>
+        </member>
+        <member name="M:LibUsbDotNet.IUsbDevice.DetachKernelDriver(System.Int32)">
+            <summary>
+            Detach Kernel Driver the specified interface of the device.
+            </summary>
+            <param name="interfaceID">The interface to detach.</param>
+            <returns>True on success.</returns>
+        </member>
+        <member name="M:LibUsbDotNet.IUsbDevice.SetAutoDetachKernelDriver(System.Boolean)">
+            <summary>
+            Enable/disable libusb's automatic kernel driver detachment.
+            </summary>
+            <param name="autoDetach"></param>
+            <returns></returns>
         </member>
         <member name="M:LibUsbDotNet.IUsbDevice.SetConfiguration(System.Byte)">
             <summary>
@@ -2161,6 +2240,11 @@
             General utilities class used by LudnLite and exposed publicly for your convience.
             </summary>
         </member>
+        <member name="P:LibUsbDotNet.Main.Helper.OSVersion">
+            <summary>
+            Gets the  <see cref="T:System.OperatingSystem"/> class.
+            </summary>
+        </member>
         <member name="P:LibUsbDotNet.Main.Helper.IsLinux">
             <summary>
             True if running on a unix-like operating system.
@@ -2677,6 +2761,13 @@
             </summary>
             <param name="deviceInterfaceGuid">The unique <see cref="T:System.Guid"/> to find.</param>
         </member>
+        <member name="M:LibUsbDotNet.Main.UsbDeviceFinder.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Use a serialization stream to fill the <see cref="T:LibUsbDotNet.Main.UsbDeviceFinder"/> class. 
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
         <member name="M:LibUsbDotNet.Main.UsbDeviceFinder.#ctor">
             <summary>
             
@@ -2718,6 +2809,28 @@
             <remarks>
             Set to <see cref="F:System.Int32.MaxValue"/> to ignore.
             </remarks>
+        </member>
+        <member name="M:LibUsbDotNet.Main.UsbDeviceFinder.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Store this class as a binary serializtion object.
+            </summary>
+            <param name="info">The serialization instance to populate.</param>
+            <param name="context"></param>
+        </member>
+        <member name="M:LibUsbDotNet.Main.UsbDeviceFinder.Load(System.IO.Stream)">
+            <summary>
+            Load usb device finder properties from a binary stream.
+            </summary>
+            <param name="deviceFinderStream">The binary stream containing a
+            <see cref="T:LibUsbDotNet.Main.UsbDeviceFinder"/> </param> instance.
+            <returns>A pre-loaded <see cref="T:LibUsbDotNet.Main.UsbDeviceFinder"/> instance.</returns>
+        </member>
+        <member name="M:LibUsbDotNet.Main.UsbDeviceFinder.Save(LibUsbDotNet.Main.UsbDeviceFinder,System.IO.Stream)">
+            <summary>
+            Saves a <see cref="T:LibUsbDotNet.Main.UsbDeviceFinder"/> instance to a stream.
+            </summary>
+            <param name="usbDeviceFinder"></param>
+            <param name="outStream"></param>
         </member>
         <member name="M:LibUsbDotNet.Main.UsbDeviceFinder.Check(LibUsbDotNet.Main.UsbRegistry)">
             <summary>
@@ -3097,7 +3210,7 @@
             Maximum time(ms) to wait for an endpoint to become idle before returning a <see cref="!:ErrorCode.EndpointLockTimedOut"/> error code.
             </summary>
             <remarks>
-            This property has no affect unless the <see cref="T:LibUsbDotNet.Main.UsbLockStyle"/> includes the <see cref="F:LibUsbDotNet.Main.DataEpLockType.Locked"/> enumeration.
+            This property has no affect unless the <see cref="!:UsbDevice.LockStyle"/> includes the <see cref="F:LibUsbDotNet.Main.DataEpLockType.Locked"/> enumeration.
             </remarks>
         </member>
         <member name="T:LibUsbDotNet.Main.UsbRegDeviceList">
@@ -4134,7 +4247,6 @@
             <summary>
             Sets an alternate interface for the most recent claimed interface.
             </summary>
-            <param name="interfaceID">The interface number of to set the alternate setting for.</param>
             <param name="alternateID">The alternate interface to select for the most recent claimed interface See <see cref="M:LibUsbDotNet.LudnMonoLibUsb.MonoUsbDevice.ClaimInterface(System.Int32)"/>.</param>
             <returns>True on success.</returns>
         </member>
@@ -4261,7 +4373,7 @@
         </member>
         <member name="P:LibUsbDotNet.UsbDevice.AllDevices">
             <summary>
-            Gets a list of all available USB devices (WinUsb, LibUsb, Linux LibUsb v1.x).
+            Gets a list of all available USB devices (WinUsb, LibusbK, LibUsb, Linux LibUsb v1.x).
             </summary>
             <remarks>
             Use this property to get a list of USB device that can be accessed by LibUsbDotNet.
@@ -4387,6 +4499,16 @@
         <member name="F:LibUsbDotNet.UsbDevice.DriverModeType.LibUsbWinBack">
             <summary>
             Using Libusb 1.0 windows backend driver on windows.
+            </summary>
+        </member>
+        <member name="F:LibUsbDotNet.UsbDevice.DriverModeType.LibusbK">
+            <summary>
+            Using LibusbK driver on windows.
+            </summary>
+        </member>
+        <member name="F:LibUsbDotNet.UsbDevice.DriverModeType.Windows">
+            <summary>
+            Using either WinUSB user-mode driver or libusbK driver on windows.
             </summary>
         </member>
         <member name="P:LibUsbDotNet.UsbDevice.Configs">
@@ -4603,6 +4725,17 @@
             </para>
             </remarks>
         </member>
+        <member name="P:LibUsbDotNet.UsbDevice.AllLibusbKDevices">
+            <summary>
+            Gets a list of all available LibusbK USB devices.
+            </summary>
+            <remarks>
+            On windows, gets a list of LibusbK devices. On linux always returns null.
+            <para>
+            Using the <see cref="P:LibUsbDotNet.UsbDevice.AllDevices"/> property instead will ensure your source code is platform-independent.
+            </para>
+            </remarks>
+        </member>
         <member name="P:LibUsbDotNet.UsbDevice.HasLibUsbDriver">
             <summary>
             True if the LibUsb driver is found on the system.
@@ -4611,6 +4744,13 @@
         <member name="P:LibUsbDotNet.UsbDevice.HasWinUsbDriver">
             <summary>
             True if the WinUSB API is available.
+            </summary>
+            <remarks>
+            </remarks>
+        </member>
+        <member name="P:LibUsbDotNet.UsbDevice.HasLibusbKDriver">
+            <summary>
+            True if the LibusbK API is available.
             </summary>
             <remarks>
             </remarks>
@@ -4644,6 +4784,11 @@
             <alert class="note"><para>
             if <see cref="F:LibUsbDotNet.Main.UsbKernelVersion.BcdLibUsbDotNetKernelMod"/> is non-zero then the kernel driver is native.
             </para></alert>
+            </summary>
+        </member>
+        <member name="P:LibUsbDotNet.UsbDevice.OSVersion">
+            <summary>
+             Gets a <see cref="T:System.OperatingSystem"/> object that contains the current platform identifier and version number.
             </summary>
         </member>
         <member name="T:LibUsbDotNet.UsbError">
@@ -4719,6 +4864,11 @@
             <remarks>
             Setting a large values, for example 64K will yield a lower number of <see cref="E:LibUsbDotNet.UsbEndpointReader.DataReceived"/> and a higher data rate. 
             </remarks>
+        </member>
+        <member name="P:LibUsbDotNet.UsbEndpointReader.ReadThreadPriority">
+            <summary>
+            Gets/Sets the Priority level for the read thread when <see cref="P:LibUsbDotNet.UsbEndpointReader.DataReceivedEnabled"/> is true.
+            </summary>
         </member>
         <member name="M:LibUsbDotNet.UsbEndpointReader.Read(System.Byte[],System.Int32,System.Int32@)">
             <summary>
@@ -4901,6 +5051,189 @@
             High speed device.
             </summary>
         </member>
+        <member name="T:LibUsbDotNet.WinUsb.LibusbKDevice">
+            <summary> 
+            Contains members specific to libusbK driver.
+            </summary> 
+            <remarks>
+            A <see cref="T:LibUsbDotNet.WinUsb.LibusbKDevice"/> should be thought of as a part of, or an interface of a USB device.
+            The <see cref="T:LibUsbDotNet.WinUsb.LibusbKDevice"/> class does not have members for selecting configurations and
+            intefaces.  This is done at a lower level by the libusbK driver depending on which interface the
+            <see cref="T:LibUsbDotNet.WinUsb.LibusbKDevice"/> belongs to.
+            </remarks> 
+        </member>
+        <member name="P:LibUsbDotNet.WinUsb.LibusbKDevice.DriverMode">
+            <summary>
+            Returns the DriverMode this USB device is using.
+            </summary>
+        </member>
+        <member name="M:LibUsbDotNet.WinUsb.LibusbKDevice.SetAltInterface(System.Int32)">
+            <summary>
+            sets the alternate interface number for the previously claimed interface. <see cref="M:LibUsbDotNet.IUsbDevice.ClaimInterface(System.Int32)"/>
+            </summary>
+            <param name="alternateID">The alternate interface number.</param>
+            <returns>True on success.</returns>
+        </member>
+        <member name="M:LibUsbDotNet.WinUsb.LibusbKDevice.GetAltInterface(System.Int32@)">
+            <summary>
+            Gets the alternate interface number for the previously claimed interface. <see cref="M:LibUsbDotNet.IUsbDevice.ClaimInterface(System.Int32)"/>
+            </summary>
+            <param name="alternateID">The alternate interface number.</param>
+            <returns>True on success.</returns>
+        </member>
+        <member name="M:LibUsbDotNet.WinUsb.LibusbKDevice.Open">
+            <summary>
+             Opens the USB device handle.
+            </summary>
+            <returns>
+            True if the device is already opened or was opened successfully.
+            False if the device does not exists or is no longer valid.  
+            </returns>
+        </member>
+        <member name="M:LibUsbDotNet.WinUsb.LibusbKDevice.Open(System.String,LibUsbDotNet.WinUsb.LibusbKDevice@)">
+            <summary>
+            Opens a LibusbK directly from the user supplied device path. 
+            </summary>
+            <param name="devicePath">Device path (symbolic link) of the LibusbK device to open.</param>
+            <param name="usbDevice">Returns an opened LibusbK device on success, null on failure.</param>
+            <returns>True on success.</returns>
+        </member>
+        <member name="M:LibUsbDotNet.WinUsb.LibusbKDevice.GetAssociatedInterface(System.Byte,LibUsbDotNet.WinUsb.WindowsDevice@)">
+            <summary>
+            Gets an interface associated with this <see cref="T:LibUsbDotNet.WinUsb.LibusbKDevice"/>.
+            </summary>
+            <param name="associatedInterfaceIndex">The index to retrieve. (0 = next interface, 1= interface after next, etc.).</param>
+            <param name="usbDevice">A new <see cref="T:LibUsbDotNet.WinUsb.LibusbKDevice"/> class for the specified AssociatedInterfaceIndex.</param>
+            <returns>True on success.</returns>
+        </member>
+        <member name="M:LibUsbDotNet.WinUsb.LibusbKDevice.QueryDeviceSpeed(LibUsbDotNet.WinUsb.DeviceSpeedTypes@)">
+            <summary>
+            Gets the device speed.
+            </summary>
+            <param name="deviceSpeed">The device speed.</param>
+            <returns>True on success.</returns>
+        </member>
+        <member name="M:LibUsbDotNet.WinUsb.LibusbKDevice.QueryInterfaceSettings(System.Byte,LibUsbDotNet.Descriptors.UsbInterfaceDescriptor@)">
+            <summary>
+            Gets a <see cref="T:LibUsbDotNet.Descriptors.UsbInterfaceDescriptor"/> for the specified AlternateInterfaceNumber,
+            </summary>
+            <param name="alternateInterfaceNumber">The alternate interface index for the <see cref="T:LibUsbDotNet.Descriptors.UsbInterfaceDescriptor"/> to retrieve. </param>
+            <param name="usbAltInterfaceDescriptor">The <see cref="T:LibUsbDotNet.Descriptors.UsbInterfaceDescriptor"/> for the specified AlternateInterfaceNumber.</param>
+            <returns>True on success.</returns>
+        </member>
+        <member name="M:LibUsbDotNet.WinUsb.LibusbKDevice.GetDevicePathList(System.Guid,System.Collections.Generic.List{System.String}@)">
+            <summary>
+            Gets a list a valid, connected libusbK device inteface paths for the a given libusbK device interface guid.
+            </summary>
+            <param name="interfaceGuid">A libusbK DeviceInterfaceGUID.  This is set in the usb devices inf file when the drivers for it are installed.</param>
+            <param name="devicePathList">A list of connected libusbK device inteface paths.</param>
+            <returns>True if one or more device paths were found.  False if no devices are found or an error occured. <see cref="E:LibUsbDotNet.UsbDevice.UsbErrorEvent"/> </returns>
+        </member>
+        <member name="M:LibUsbDotNet.WinUsb.LibusbKDevice.Finalize">
+            <summary>
+            Closes the device. <see cref="!:LibusbKDevice.Close"/>.
+            </summary>
+        </member>
+        <member name="T:LibUsbDotNet.WinUsb.LibusbKRegistry">
+            <summary> WinUsb specific members for device registry settings.
+            </summary> 
+        </member>
+        <member name="M:LibUsbDotNet.WinUsb.LibusbKRegistry.GetDevicePathList(System.Guid,System.Collections.Generic.List{System.String}@)">
+            <summary>
+            Gets a list of libusbK device paths for the specified interface guid.
+            </summary>
+            <param name="deviceInterfaceGuid">The DeviceInterfaceGUID to search for.</param>
+            <param name="devicePathList">A list of device paths associated with the <paramref name="deviceInterfaceGuid"/>.</param>
+            <returns>True of one or more device paths was found.</returns>
+            <remarks>
+            Each device path string in the <paramref name="devicePathList"/> represents a seperate libusbK device (interface).
+            </remarks>
+            <seealso cref="!:GetWinUsbRegistryList"/>
+        </member>
+        <member name="M:LibUsbDotNet.WinUsb.LibusbKRegistry.GetLibusbKRegistryList(System.Guid,System.Collections.Generic.List{LibUsbDotNet.WinUsb.LibusbKRegistry}@)">
+            <summary>
+            Gets a list of <see cref="T:LibUsbDotNet.WinUsb.LibusbKRegistry"/> classes for the specified interface guid.
+            </summary>
+            <param name="deviceInterfaceGuid">The DeviceInterfaceGUID to search for.</param>
+            <param name="deviceRegistryList">A list of device paths associated with the <paramref name="deviceInterfaceGuid"/>.</param>
+            <returns>True of one or more device paths was found.</returns>
+            <remarks>
+            Each <see cref="T:LibUsbDotNet.WinUsb.LibusbKRegistry"/> in the <paramref name="deviceRegistryList"/> represents a seperate libusbK device (interface).
+            </remarks>
+        </member>
+        <member name="P:LibUsbDotNet.WinUsb.LibusbKRegistry.DeviceList">
+            <summary>
+            Gets a list of available LibUsbK devices.
+            </summary>
+        </member>
+        <member name="P:LibUsbDotNet.WinUsb.LibusbKRegistry.DeviceInterfaceGuids">
+            <summary>
+            Gets a collection of DeviceInterfaceGuids that are associated with this libusbK device.
+            </summary>
+        </member>
+        <member name="P:LibUsbDotNet.WinUsb.LibusbKRegistry.IsAlive">
+            <summary>
+            Check this value to determine if the usb device is still connected to the bus and ready to open.
+            </summary>
+            <remarks>
+            Uses the symbolic name as a unique id to determine if this device instance is still attached.
+            </remarks>
+            <exception cref="T:LibUsbDotNet.Main.UsbException">An exception is thrown if the <see cref="P:LibUsbDotNet.Main.UsbRegistry.SymbolicName"/> property is null or empty.</exception>
+        </member>
+        <member name="P:LibUsbDotNet.WinUsb.LibusbKRegistry.Device">
+            <summary>
+            Opens the USB device for communucation.
+            </summary>
+            <returns>Return a new instance of the <see cref="T:LibUsbDotNet.UsbDevice"/> class.
+            If the device fails to open a null refrence is return. For extended error
+            information use the <see cref="E:LibUsbDotNet.UsbDevice.UsbErrorEvent"/>.
+             </returns>
+        </member>
+        <member name="P:LibUsbDotNet.WinUsb.LibusbKRegistry.DeviceID">
+            <summary>
+            Gets the device instance id.
+            </summary>
+            <remarks>
+            For more information on device instance ids, see the <a href="http://msdn.microsoft.com/en-us/library/ff538405%28v=VS.85%29.aspx">CM_Get_Device_ID Function</a> at MSDN.
+            </remarks>
+        </member>
+        <member name="P:LibUsbDotNet.WinUsb.LibusbKRegistry.Vid">
+            <summary>
+            VendorID
+            </summary>
+            <remarks>This value is parsed out of the <see cref="P:LibUsbDotNet.WinUsb.LibusbKRegistry.DeviceID"/> field.</remarks>
+        </member>
+        <member name="P:LibUsbDotNet.WinUsb.LibusbKRegistry.Pid">
+            <summary>
+            ProductID
+            </summary>
+            <remarks>This value is parsed out of the <see cref="P:LibUsbDotNet.WinUsb.LibusbKRegistry.DeviceID"/> field.</remarks>
+        </member>
+        <member name="P:LibUsbDotNet.WinUsb.LibusbKRegistry.InterfaceID">
+            <summary>
+             Gets the interface ID this libusbK device (interface) is associated with.
+            </summary>
+             <remarks>This value is parsed out of the <see cref="P:LibUsbDotNet.WinUsb.LibusbKRegistry.DeviceID"/> field.</remarks>
+        </member>
+        <member name="M:LibUsbDotNet.WinUsb.LibusbKRegistry.Open(LibUsbDotNet.UsbDevice@)">
+            <summary>
+            Opens the USB device for communucation.
+            </summary>
+            <param name="usbDevice">The newly created UsbDevice.</param>
+            <returns>True on success.</returns>
+        </member>
+        <member name="M:LibUsbDotNet.WinUsb.LibusbKRegistry.Open(LibUsbDotNet.WinUsb.LibusbKDevice@)">
+            <summary>
+            Opens the USB device for communucation.
+            </summary>
+            <param name="usbDevice">Returns an opened LibusbK device on success, null on failure.</param>
+            <returns>True on success.</returns>
+        </member>
+        <member name="P:LibUsbDotNet.WinUsb.LibusbKRegistry.DevicePath">
+            <summary>
+            For LibusbKRegistry objects, this always returns <see cref='!:SymbolicName' />.
+            </summary>
+        </member>
         <member name="T:LibUsbDotNet.WinUsb.PipeInformation">
             <summary> WinUsb Pipe information.
             </summary> 
@@ -4931,7 +5264,7 @@
             </summary>
         </member>
         <member name="T:LibUsbDotNet.WinUsb.PipePolicies">
-            <summary> Endpoint specific policies. <see cref="M:LibUsbDotNet.WinUsb.WinUsbDevice.EndpointPolicies(LibUsbDotNet.Main.ReadEndpointID)"/>.
+            <summary> Endpoint specific policies. <see cref="!:WinUsbDevice.EndpointPolicies(ReadEndpointID)"/>.
             </summary> 
         </member>
         <member name="P:LibUsbDotNet.WinUsb.PipePolicies.AllowPartialReads">
@@ -5004,7 +5337,7 @@
         </member>
         <member name="T:LibUsbDotNet.WinUsb.PowerPolicies">
             <summary> 
-            power policy for a <see cref="T:LibUsbDotNet.WinUsb.WinUsbDevice"/>.
+            power policy for a <see cref="T:LibUsbDotNet.WinUsb.WindowsDevice"/>.
             </summary> 
         </member>
         <member name="P:LibUsbDotNet.WinUsb.PowerPolicies.AutoSuspend">
@@ -5022,9 +5355,97 @@
             Frees instance resources.
             </summary>
         </member>
+        <member name="T:LibUsbDotNet.WinUsb.WindowsDevice">
+            <summary> 
+            Contains members specific to Microsofts WinUSB driver or libusbK driver.
+            </summary> 
+            <remarks>
+            A <see cref="T:LibUsbDotNet.WinUsb.WindowsDevice"/> should be thought of as a part of, or an interface of a USB device.
+            The <see cref="T:LibUsbDotNet.WinUsb.WindowsDevice"/> class does not have members for selecting configurations and
+            intefaces.  This is done at a lower level by the winusb driver depending on which interface the
+            <see cref="T:LibUsbDotNet.WinUsb.WindowsDevice"/> belongs to.
+            </remarks> 
+        </member>
+        <member name="P:LibUsbDotNet.WinUsb.WindowsDevice.PowerPolicy">
+            <summary>
+            Gets the power policies for this <see cref="T:LibUsbDotNet.WinUsb.WinUsbDevice"/>.
+            </summary>
+        </member>
+        <member name="P:LibUsbDotNet.WinUsb.WindowsDevice.DevicePath">
+            <summary>
+            Gets the device path used to open this <see cref="T:LibUsbDotNet.WinUsb.WinUsbDevice"/>.
+            </summary>
+        </member>
+        <member name="P:LibUsbDotNet.WinUsb.WindowsDevice.DriverMode">
+            <summary>
+            Returns the DriverMode this USB device is using.
+            </summary>
+        </member>
+        <member name="M:LibUsbDotNet.WinUsb.WindowsDevice.Close">
+            <summary>
+            Closes the <see cref="T:LibUsbDotNet.UsbDevice"/> and disposes any <see cref="P:LibUsbDotNet.UsbDevice.ActiveEndpoints"/>.
+            </summary>
+            <returns>True on success.</returns>
+        </member>
+        <member name="M:LibUsbDotNet.WinUsb.WindowsDevice.SetAltInterface(System.Int32)">
+            <summary>
+            sets the alternate interface number for the previously claimed interface. <see cref="M:LibUsbDotNet.IUsbDevice.ClaimInterface(System.Int32)"/>
+            </summary>
+            <param name="alternateID">The alternate interface number.</param>
+            <returns>True on success.</returns>
+        </member>
+        <member name="M:LibUsbDotNet.WinUsb.WindowsDevice.GetAltInterface(System.Int32@)">
+            <summary>
+            Gets the alternate interface number for the previously claimed interface. <see cref="M:LibUsbDotNet.IUsbDevice.ClaimInterface(System.Int32)"/>
+            </summary>
+            <param name="alternateID">The alternate interface number.</param>
+            <returns>True on success.</returns>
+        </member>
+        <member name="M:LibUsbDotNet.WinUsb.WindowsDevice.EndpointPolicies(LibUsbDotNet.Main.ReadEndpointID)">
+            <summary>
+            Gets endpoint policies for the specified endpoint id.
+            </summary>
+            <param name="epNum">The endpoint ID to retrieve <see cref="T:LibUsbDotNet.WinUsb.PipePolicies"/> for.</param>
+            <returns>A <see cref="T:LibUsbDotNet.WinUsb.PipePolicies"/> class.</returns>
+        </member>
+        <member name="M:LibUsbDotNet.WinUsb.WindowsDevice.EndpointPolicies(LibUsbDotNet.Main.WriteEndpointID)">
+            <summary>
+            Gets endpoint policies for the specified endpoint id.
+            </summary>
+            <param name="epNum">The endpoint ID to retrieve <see cref="T:LibUsbDotNet.WinUsb.PipePolicies"/> for.</param>
+            <returns>A <see cref="T:LibUsbDotNet.WinUsb.PipePolicies"/> class.</returns>
+        </member>
+        <member name="M:LibUsbDotNet.WinUsb.WindowsDevice.GetAssociatedInterface(System.Byte,LibUsbDotNet.WinUsb.WindowsDevice@)">
+            <summary>
+            Gets an interface associated with this <see cref="T:LibUsbDotNet.WinUsb.WindowsDevice"/>.
+            </summary>
+            <param name="associatedInterfaceIndex">The index to retrieve. (0 = next interface, 1= interface after next, etc.).</param>
+            <param name="usbDevice">A new <see cref="T:LibUsbDotNet.WinUsb.WindowsDevice"/> class for the specified AssociatedInterfaceIndex.</param>
+            <returns>True on success.</returns>
+        </member>
+        <member name="M:LibUsbDotNet.WinUsb.WindowsDevice.QueryDeviceSpeed(LibUsbDotNet.WinUsb.DeviceSpeedTypes@)">
+            <summary>
+            Gets the device speed.
+            </summary>
+            <param name="deviceSpeed">The device speed.</param>
+            <returns>True on success.</returns>
+        </member>
+        <member name="M:LibUsbDotNet.WinUsb.WindowsDevice.QueryInterfaceSettings(System.Byte,LibUsbDotNet.Descriptors.UsbInterfaceDescriptor@)">
+            <summary>
+            Gets a <see cref="T:LibUsbDotNet.Descriptors.UsbInterfaceDescriptor"/> for the specified AlternateInterfaceNumber,
+            </summary>
+            <param name="alternateInterfaceNumber">The alternate interface index for the <see cref="T:LibUsbDotNet.Descriptors.UsbInterfaceDescriptor"/> to retrieve. </param>
+            <param name="usbAltInterfaceDescriptor">The <see cref="T:LibUsbDotNet.Descriptors.UsbInterfaceDescriptor"/> for the specified AlternateInterfaceNumber.</param>
+            <returns>True on success.</returns>
+        </member>
+        <member name="M:LibUsbDotNet.WinUsb.WindowsDevice.Finalize">
+            <summary>
+            Closes the device. <see cref="M:LibUsbDotNet.WinUsb.WindowsDevice.Close"/>.
+            </summary>
+        </member>
         <member name="T:LibUsbDotNet.WinUsb.WinUsbDevice">
             <summary> 
-            Contains members specific to Microsofts WinUSB driver.
+            Contains members specific to Microsoft WinUSB driver.
             </summary> 
             <remarks>
             A <see cref="T:LibUsbDotNet.WinUsb.WinUsbDevice"/> should be thought of as a part of, or an interface of a USB device.
@@ -5033,26 +5454,10 @@
             <see cref="T:LibUsbDotNet.WinUsb.WinUsbDevice"/> belongs to.
             </remarks> 
         </member>
-        <member name="P:LibUsbDotNet.WinUsb.WinUsbDevice.PowerPolicy">
-            <summary>
-            Gets the power policies for this <see cref="T:LibUsbDotNet.WinUsb.WinUsbDevice"/>.
-            </summary>
-        </member>
-        <member name="P:LibUsbDotNet.WinUsb.WinUsbDevice.DevicePath">
-            <summary>
-            Gets the device path used to open this <see cref="T:LibUsbDotNet.WinUsb.WinUsbDevice"/>.
-            </summary>
-        </member>
         <member name="P:LibUsbDotNet.WinUsb.WinUsbDevice.DriverMode">
             <summary>
             Returns the DriverMode this USB device is using.
             </summary>
-        </member>
-        <member name="M:LibUsbDotNet.WinUsb.WinUsbDevice.Close">
-            <summary>
-            Closes the <see cref="T:LibUsbDotNet.UsbDevice"/> and disposes any <see cref="P:LibUsbDotNet.UsbDevice.ActiveEndpoints"/>.
-            </summary>
-            <returns>True on success.</returns>
         </member>
         <member name="M:LibUsbDotNet.WinUsb.WinUsbDevice.SetAltInterface(System.Int32)">
             <summary>
@@ -5085,21 +5490,7 @@
             <param name="usbDevice">Returns an opened WinUsb device on success, null on failure.</param>
             <returns>True on success.</returns>
         </member>
-        <member name="M:LibUsbDotNet.WinUsb.WinUsbDevice.EndpointPolicies(LibUsbDotNet.Main.ReadEndpointID)">
-            <summary>
-            Gets endpoint policies for the specified endpoint id.
-            </summary>
-            <param name="epNum">The endpoint ID to retrieve <see cref="T:LibUsbDotNet.WinUsb.PipePolicies"/> for.</param>
-            <returns>A <see cref="T:LibUsbDotNet.WinUsb.PipePolicies"/> class.</returns>
-        </member>
-        <member name="M:LibUsbDotNet.WinUsb.WinUsbDevice.EndpointPolicies(LibUsbDotNet.Main.WriteEndpointID)">
-            <summary>
-            Gets endpoint policies for the specified endpoint id.
-            </summary>
-            <param name="epNum">The endpoint ID to retrieve <see cref="T:LibUsbDotNet.WinUsb.PipePolicies"/> for.</param>
-            <returns>A <see cref="T:LibUsbDotNet.WinUsb.PipePolicies"/> class.</returns>
-        </member>
-        <member name="M:LibUsbDotNet.WinUsb.WinUsbDevice.GetAssociatedInterface(System.Byte,LibUsbDotNet.WinUsb.WinUsbDevice@)">
+        <member name="M:LibUsbDotNet.WinUsb.WinUsbDevice.GetAssociatedInterface(System.Byte,LibUsbDotNet.WinUsb.WindowsDevice@)">
             <summary>
             Gets an interface associated with this <see cref="T:LibUsbDotNet.WinUsb.WinUsbDevice"/>.
             </summary>
@@ -5132,7 +5523,7 @@
         </member>
         <member name="M:LibUsbDotNet.WinUsb.WinUsbDevice.Finalize">
             <summary>
-            Closes the device. <see cref="M:LibUsbDotNet.WinUsb.WinUsbDevice.Close"/>.
+            Closes the device. <see cref="!:WinUsbDevice.Close"/>.
             </summary>
         </member>
         <member name="T:LibUsbDotNet.WinUsb.WinUsbRegistry">
@@ -5164,7 +5555,7 @@
         </member>
         <member name="P:LibUsbDotNet.WinUsb.WinUsbRegistry.DeviceList">
             <summary>
-            Gets a list of available LibUsb devices.
+            Gets a list of available WinUSB devices.
             </summary>
         </member>
         <member name="P:LibUsbDotNet.WinUsb.WinUsbRegistry.DeviceInterfaceGuids">
@@ -5232,7 +5623,7 @@
         </member>
         <member name="P:LibUsbDotNet.WinUsb.WinUsbRegistry.DevicePath">
             <summary>
-            For WinUsbRegistry objects, this always returns <see cref="P:LibUsbDotNet.Main.UsbRegistry.SymbolicName"/>.
+            For WinUsbRegistry objects, this always returns <see cref='!:SymbolicName' />.
             </summary>
         </member>
         <member name="T:MonoLibUsb.MonoUsbTransferDelegate">
@@ -5763,7 +6154,6 @@
             <remarks>
             <para>You must claim the interface you wish to use before you can perform I/O on any of its endpoints.</para>
             <para>It is legal to attempt to claim an already-claimed interface, in which case libusb just returns 0 without doing anything.</para>
-            <para>If <see cref="M:MonoLibUsb.MonoUsbApi.SetAutoDetachKernelDriver(MonoLibUsb.MonoUsbDeviceHandle,System.Int32)">auto_detach_kernel_driver</see> is set to 1 for <tt>dev</tt>, the kernel driver will be detached if necessary, on failure the detach error is returned.</para>
             <para>Claiming of interfaces is a purely logical operation; it does not cause any requests to be sent over the bus. Interface claiming is used to instruct the underlying operating system that your application wishes to take ownership of the interface.</para>
             <note type="tip" title="Libusb-1.0 API:"><seelibusb10 group="dev"/></note>
             </remarks>
@@ -5786,7 +6176,6 @@
             <remarks>
             <para>You should release all claimed interfaces before closing a device handle.</para>
             <para>This is a blocking function. A SET_INTERFACE control request will be sent to the device, resetting interface state to the first alternate setting.</para>
-            <para>If <see cref="M:MonoLibUsb.MonoUsbApi.SetAutoDetachKernelDriver(MonoLibUsb.MonoUsbDeviceHandle,System.Int32)">auto_detach_kernel_driver</see> is set to 1 for <tt>dev</tt>, the kernel driver will be re-attached after releasing the interface.</para>
             <note type="tip" title="Libusb-1.0 API:"><seelibusb10 group="dev"/></note>
             </remarks>
             <param name="deviceHandle">A device handle.</param>
@@ -5900,6 +6289,17 @@
             </list>
             </returns>
         </member>
+        <member name="M:MonoLibUsb.MonoUsbApi.SetAutoDetachKernelDriver(MonoLibUsb.MonoUsbDeviceHandle,System.Int32)">
+            <summary>
+            When this is enabled libusb will automatically detach the kernel driver on an interface when claiming the interface, and attach it when releasing the interface.
+            </summary>
+            <remarks>
+            <note type="tip" title="Libusb-1.0 API:"><seelibusb10 group="dev"/></note>
+            </remarks>
+            <param name="deviceHandle">A device handle.</param>
+            <param name="enable"> If the enable argument is non-zero the feature is enabled. Else disabled. Returns 0 on success and a LIBUSB_ERROR code on failure.</param>
+            <returns></returns>
+        </member>
         <member name="M:MonoLibUsb.MonoUsbApi.AttachKernelDriver(MonoLibUsb.MonoUsbDeviceHandle,System.Int32)">
             <summary>
             Re-attach an interface's kernel driver, which was previously detached using <see cref="M:MonoLibUsb.MonoUsbApi.DetachKernelDriver(MonoLibUsb.MonoUsbDeviceHandle,System.Int32)"/>.
@@ -5917,29 +6317,6 @@
             <item><see cref="F:MonoLibUsb.MonoUsbError.ErrorNoDevice"/> if the device has been disconnected.</item>
             <item><see cref="F:MonoLibUsb.MonoUsbError.ErrorBusy"/> if the driver cannot be attached because the interface is claimed by a program or driver.</item>
             <item>Another <see cref="T:MonoLibUsb.MonoUsbError"/> code on other failure.</item>
-            </list>
-            </returns>
-        </member>
-        <member name="M:MonoLibUsb.MonoUsbApi.SetAutoDetachKernelDriver(MonoLibUsb.MonoUsbDeviceHandle,System.Int32)">
-            <summary>
-            Enable/disable libusb's automatic kernel driver detachment. When this is 
-            enabled libusb will automatically detach the kernel driver on an interface
-            when claiming the interface, and attach it when releasing the interface.
-            <remaks>
-            <note type="tip" title="Libusb-1.0 API:"><seelibusb10 group="dev"/></note>
-            <para>Automatic kernel driver detachment is disabled on newly opened device 
-            handles by default.</para>
-            <para>On platforms which do not have <see cref="F:MonoLibUsb.MonoUsbCapability.LIBUSB_CAP_SUPPORTS_DETACH_KERNEL_DRIVER"/>
-            this function will return <see cref="F:MonoLibUsb.MonoUsbError.ErrorNotSupported"/>, and libusb will
-            continue as if this function was never called.</para>
-            </remaks>
-            </summary>
-            <param name="deviceHandle">A device handle.</param>
-            <param name="enable">Whether to enable or disable auto kernel driver detachment.</param>
-            <returns>
-            <list type="bullet">
-            <item><see cref="F:MonoLibUsb.MonoUsbError.Success"/> on success.</item>
-            <item><see cref="F:MonoLibUsb.MonoUsbError.ErrorNotSupported"/> on platforms where the functionality is not available.</item>
             </list>
             </returns>
         </member>
@@ -6241,7 +6618,7 @@
             <remarks>
             <para>To remove notifiers, pass NULL values for the function pointers.</para>
             <para>Note that file descriptors may have been added even before you register these notifiers (e.g. when a new <see cref="T:MonoLibUsb.MonoUsbSessionHandle"/> is created).</para>
-            <para>Additionally, note that the removal notifier may be called during <see cref="M:MonoLibUsb.MonoUsbApi.Exit(System.IntPtr)"/> (e.g. when it is closing file descriptors that were opened and added to the poll set when a new <see cref="T:MonoLibUsb.MonoUsbSessionHandle"/> was created). If you don't want this, remove the notifiers immediately before calling <see cref="!:SafeHandle.Close">MonoUsbSessionHandle.Close()</see>.</para>
+            <para>Additionally, note that the removal notifier may be called during <see cref="M:MonoLibUsb.MonoUsbApi.Exit(System.IntPtr)"/> (e.g. when it is closing file descriptors that were opened and added to the poll set when a new <see cref="T:MonoLibUsb.MonoUsbSessionHandle"/> was created). If you don't want this, remove the notifiers immediately before calling <see cref="M:System.Runtime.InteropServices.SafeHandle.Close">MonoUsbSessionHandle.Close()</see>.</para>
             <note type="tip" title="Libusb-1.0 API:"><seelibusb10 group="poll"/></note>
             </remarks>
             <param name="sessionHandle">A valid <see cref="T:MonoLibUsb.MonoUsbSessionHandle"/>.</param>
@@ -6256,7 +6633,7 @@
             <param name="errcode">The <see cref="T:MonoLibUsb.MonoUsbError"/> code to retrieve a description for.</param>
             <returns>A string describing the <see cref="T:MonoLibUsb.MonoUsbError"/> code.</returns>
         </member>
-        <member name="M:MonoLibUsb.MonoUsbApi.GetDescriptor(MonoLibUsb.MonoUsbDeviceHandle,System.Byte,System.Byte,System.IntPtr,System.Int32)">
+        <member name="M:MonoLibUsb.MonoUsbApi.GetDescriptor(MonoLibUsb.MonoUsbDeviceHandle,System.Byte,System.Byte,System.Int16,System.IntPtr,System.Int32)">
             <summary>
             Retrieve a descriptor from the default control pipe. 
             </summary>
@@ -6267,6 +6644,7 @@
             <param name="deviceHandle">Retrieve a descriptor from the default control pipe.</param>
             <param name="descType">The descriptor type, <see cref="!:DescriptorType"/></param>
             <param name="descIndex">The index of the descriptor to retrieve.</param>
+            <param name="langId">Descriptor language id.</param>
             <param name="pData">Output buffer for descriptor.</param>
             <param name="length">Size of data buffer.</param>
             <returns>Number of bytes returned in data, or a <see cref="T:MonoLibUsb.MonoUsbError"/> code on failure.</returns>
@@ -6286,7 +6664,7 @@
             <param name="length">Size of data buffer.</param>
             <returns>Number of bytes returned in data, or <see cref="T:MonoLibUsb.MonoUsbError"/> code on failure.</returns>
         </member>
-        <member name="M:MonoLibUsb.MonoUsbApi.OpenDeviceWithVidPid(MonoLibUsb.MonoUsbSessionHandle,System.Int16,System.Int16)">
+        <member name="M:MonoLibUsb.MonoUsbApi.OpenDeviceWithVidPid(MonoLibUsb.MonoUsbSessionHandle,System.UInt16,System.UInt16)">
             <summary>
             Convenience function for finding a device with a particular idVendor/idProduct combination. 
             </summary>
@@ -6541,7 +6919,7 @@
             <summary>Open a device handle from <paramref name="profileHandle"/>.</summary>
             <remarks>
             <para>A handle allows you to perform I/O on the device in question.</para>
-            <para>To close a device handle call its <see cref="!:SafeHandle.Close"/> method.</para>
+            <para>To close a device handle call its <see cref="M:System.Runtime.InteropServices.SafeHandle.Close"/> method.</para>
             <para>This is a non-blocking function; no requests are sent over the bus.</para>
             <note title="Libusb-1.0 API Note:" type="cpp">The <see cref="M:MonoLibUsb.MonoUsbDeviceHandle.#ctor(MonoLibUsb.Profile.MonoUsbProfileHandle)"/> constructor is roughly equivalent to <a href="http://libusb.sourceforge.net/api-1.0/group__dev.html#ga8163100afdf933fabed0db7fa81c89d1">libusb_open()</a>.</note>
             </remarks>
@@ -6658,6 +7036,11 @@
             False if the handle events thread is running.
             </summary>
         </member>
+        <member name="P:MonoLibUsb.MonoUsbEventHandler.Priority">
+            <summary>
+            Thread proirity to use for the handle events thread.
+            </summary>
+        </member>
         <member name="M:MonoLibUsb.MonoUsbEventHandler.Exit">
             <summary>
             Stops the handle events thread and closes the session handle.
@@ -6713,15 +7096,15 @@
         <member name="T:MonoLibUsb.MonoUsbSessionHandle">
             <summary>
             Class representing a Libusb-1.0 session session handle.
-            Session handled are wrapped in a <see cref="!:System.Runtime.ConstrainedExecution.CriticalFinalizerObject"/>. 
+            Session handled are wrapped in a <see cref="T:System.Runtime.ConstrainedExecution.CriticalFinalizerObject"/>. 
             </summary>
             <remarks>
             <para>The concept of individual Libusb-1.0 sessions allows for your program to use two libraries 
             (or dynamically load two modules) which both independently use libusb. This will prevent interference between the 
             individual libusb users - for example <see cref="M:MonoLibUsb.MonoUsbApi.SetDebug(MonoLibUsb.MonoUsbSessionHandle,System.Int32)"/> will not affect the other 
-            user of the library, and <see cref="!:SafeHandle.Close"/> will not destroy resources that the 
+            user of the library, and <see cref="M:System.Runtime.InteropServices.SafeHandle.Close"/> will not destroy resources that the 
             other user is still using.</para>
-            <para>Sessions are created when a new <see cref="T:MonoLibUsb.MonoUsbSessionHandle"/> instance is created and destroyed through <see cref="!:SafeHandle.Close"/>.</para>
+            <para>Sessions are created when a new <see cref="T:MonoLibUsb.MonoUsbSessionHandle"/> instance is created and destroyed through <see cref="M:System.Runtime.InteropServices.SafeHandle.Close"/>.</para>
             <para>A <see cref="T:MonoLibUsb.MonoUsbSessionHandle"/> instance must be created before calling any other <a href="http://libusb.sourceforge.net/api-1.0/index.html">Libusb-1.0 API</a> function.</para>
             <para>Session handles are equivalent to a <a href="http://libusb.sourceforge.net/api-1.0/group__lib.html#ga4ec088aa7b79c4a9599e39bf36a72833">libusb_context</a>.</para>
             </remarks>
@@ -6890,7 +7273,7 @@
         </member>
         <member name="T:MonoLibUsb.Profile.MonoUsbProfileHandle">
             <summary>
-            Wraps a profile handle into a <see cref="!:System.Runtime.ConstrainedExecution.CriticalFinalizerObject"/>. 
+            Wraps a profile handle into a <see cref="T:System.Runtime.ConstrainedExecution.CriticalFinalizerObject"/>. 
             Profile handles are used for getting device descriptor information and opening the device.  Profile handles
             are known connected and usually supported usb device that can be opened and used.
             </summary>
@@ -6997,7 +7380,7 @@
             <remarks>
             <para>
             <see cref="T:MonoLibUsb.Profile.MonoUsbProfileHandle"/>s that are in-use are never closed until all reference(s) have gone 
-            out-of-scope or specifically been closed with the <see cref="!:SafeHandle.Close"/> method.
+            out-of-scope or specifically been closed with the <see cref="M:System.Runtime.InteropServices.SafeHandle.Close"/> method.
             </para>
             </remarks>
         </member>
@@ -7072,7 +7455,7 @@
             Used to iterate through the <see cref="T:MonoLibUsb.Profile.MonoUsbProfileHandle"/> collection contained in the <see cref="T:MonoLibUsb.Profile.MonoUsbProfileListHandle"/>.
             </summary>
             <remarks>
-            <para>Wraps a device list handle into a <see cref="!:System.Runtime.ConstrainedExecution.CriticalFinalizerObject"/></para>
+            <para>Wraps a device list handle into a <see cref="T:System.Runtime.ConstrainedExecution.CriticalFinalizerObject"/></para>
             </remarks>
             <seealso cref="T:MonoLibUsb.Profile.MonoUsbProfileList"/>
         </member>
