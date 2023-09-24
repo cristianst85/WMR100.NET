@@ -1,8 +1,8 @@
 .vs/
 build/
 packages/
-WMR100.NET.Example/bin/
-WMR100.NET.Example/obj/
+WMR100.NET.ConsoleDemo/bin/
+WMR100.NET.ConsoleDemo/obj/
 WMR100.NET.Tests/bin/
 WMR100.NET.Tests/obj/
 WMR100.NET/bin/

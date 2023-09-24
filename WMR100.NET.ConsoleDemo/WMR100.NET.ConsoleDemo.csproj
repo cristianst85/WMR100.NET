@@ -7,8 +7,8 @@
     <ProjectGuid>{B853A865-FC80-4C2A-804C-58F20FE127B7}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WMR100.NET.Example</RootNamespace>
-    <AssemblyName>WMR100.NET.Example</AssemblyName>
+    <RootNamespace>WMR100.NET.ConsoleDemo</RootNamespace>
+    <AssemblyName>WMR100.NET.ConsoleDemo</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -35,7 +35,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>WMR100.NET.Example.Program</StartupObject>
+    <StartupObject>WMR100.NET.ConsoleDemo.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LibUsbDotNet.LibUsbDotNet">

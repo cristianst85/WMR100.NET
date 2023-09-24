@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WMR100.NET.Example")]
-[assembly: AssemblyDescription("WMR100.NET.Example")]
+[assembly: AssemblyTitle("WMR100.NET.ConsoleDemo")]
+[assembly: AssemblyDescription("WMR100.NET.ConsoleDemo")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Cristian Stoica")]
-[assembly: AssemblyProduct("WMR100.NET.Example")]
+[assembly: AssemblyProduct("WMR100.NET.ConsoleDemo")]
 [assembly: AssemblyCopyright("Copyright © Cristian Stoica 2017-2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

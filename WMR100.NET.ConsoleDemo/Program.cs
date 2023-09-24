@@ -3,7 +3,7 @@ using System;
 using WMR100.NET.Data;
 using WMR100.NET.Helpers;
 
-namespace WMR100.NET.Example
+namespace WMR100.NET.ConsoleDemo
 {
     public class Program
     {
