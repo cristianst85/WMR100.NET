@@ -21,9 +21,8 @@ namespace WMR100.NET
                 var usbDeviceFinder = new UsbDeviceFinder(descriptor.Vendor.Id, descriptor.Product.Id);
 
                 usbDevice = UsbDevice.OpenUsbDevice(usbDeviceFinder);
-                MonoUsbDevice monoUsbDevice = usbDevice as MonoUsbDevice;
 
-                if (monoUsbDevice != null)
+                if (usbDevice is MonoUsbDevice monoUsbDevice)
                 {
                     var monoUsbDeviceHandle = monoUsbDevice.Profile.OpenDeviceHandle();
                     Console.WriteLine("Setting auto detach kernel driver true...");
@@ -80,9 +79,7 @@ namespace WMR100.NET
                 {
                     if (usbDevice.IsOpen)
                     {
-                        IUsbDevice wholeUsbDevice = usbDevice as IUsbDevice;
-
-                        if (wholeUsbDevice != null)
+                        if (usbDevice is IUsbDevice wholeUsbDevice)
                         {
                             // Release interface #0.
                             bool success = wholeUsbDevice.ReleaseInterface(0);
@@ -91,7 +88,6 @@ namespace WMR100.NET
 
                         usbDevice.Close();
                     }
-                    usbDevice = null;
                 }
 
                 UsbDevice.Exit();
@@ -116,8 +112,7 @@ namespace WMR100.NET
         {
             byte[] buffer = new byte[8];
 
-            int bytesRead = 0;
-            ErrorCode errorCode = usbEndpointReader.Read(buffer, 30000, out bytesRead);
+            ErrorCode errorCode = usbEndpointReader.Read(buffer, 30000, out int bytesRead);
 
             if (bytesRead == 0)
             {
@@ -134,10 +129,8 @@ namespace WMR100.NET
 
         public void Write(byte[] buffer)
         {
-            int bytesTransferred = 0;
-
             var usbSetupPacket = WmrUsbSetupPacket.Create();
-            bool success = usbDevice.ControlTransfer(ref usbSetupPacket, buffer, buffer.Length, out bytesTransferred);
+            bool success = usbDevice.ControlTransfer(ref usbSetupPacket, buffer, buffer.Length, out int bytesTransferred);
 
             if (!success)
             {

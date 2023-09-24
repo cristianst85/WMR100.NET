@@ -1,7 +1,7 @@
 using System;
 using WMR100.NET.SensorData;
 
-namespace WMR100.NET.Data
+namespace WMR100.NET
 {
     /// <summary>
     /// The following references were used for figuring out the WMR100 protocol:
@@ -40,7 +40,7 @@ namespace WMR100.NET.Data
 
                 if (timeZoneOffset > 128)
                 {
-                    timeZoneOffset = timeZoneOffset - 256;
+                    timeZoneOffset -= 256;
                 }
 
                 var clock = new DateTime(year, month, day, hour, minute, 0, DateTimeKind.Local);

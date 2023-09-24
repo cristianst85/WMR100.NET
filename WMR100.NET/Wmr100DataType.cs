@@ -1,4 +1,4 @@
-﻿namespace WMR100.NET.Data
+﻿namespace WMR100.NET
 {
     public enum Wmr100DataType : byte
     {

@@ -1,4 +1,4 @@
-﻿namespace WMR100.NET.Data
+﻿namespace WMR100.NET
 {
     public interface IWmr100Data
     {

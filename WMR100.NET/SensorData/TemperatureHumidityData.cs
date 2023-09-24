@@ -1,5 +1,4 @@
 ﻿using System;
-using WMR100.NET.Data;
 
 namespace WMR100.NET.SensorData
 {

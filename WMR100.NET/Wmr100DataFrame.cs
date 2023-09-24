@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WMR100.NET.Data
+namespace WMR100.NET
 {
     /// <summary>
     /// The frame structure is as follows,

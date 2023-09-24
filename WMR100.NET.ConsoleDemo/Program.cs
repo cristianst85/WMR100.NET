@@ -1,36 +1,29 @@
 ﻿using LibUsbDotNet;
 using System;
-using WMR100.NET.Data;
 using WMR100.NET.Helpers;
 
 namespace WMR100.NET.ConsoleDemo
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
-            Type t = Type.GetType("Mono.Runtime");
-
-            if (t == null)
-            {
-                throw new NotImplementedException();
-            }
-
-            initMono();
+            var t = Type.GetType("Mono.Runtime") ?? throw new NotImplementedException();
+            InitMono();
         }
 
-        private static void initMono()
+        private static void InitMono()
         {
             // Subscribe to this event to see the errors from low-level API.
             UsbDevice.UsbErrorEvent += UsbDevice_UsbErrorEvent;
 
             using (var wmrUsbDevice = WmrUsbDevice.Create())
             {
-                var wmr100Device = new Wmr100Device(wmrUsbDevice);
+                var wmr100Device = new Wmr100Device(wmrUsbDevice, new Wmr100DataFrameAssembler());
 
                 wmr100Device.Init();
 
-                wmr100Device.DataRecieved += Wmr100Device_DataRecieved;
+                wmr100Device.DataReceived += Wmr100Device_DataReceived;
                 wmr100Device.DataError += Wmr100Device_DataError;
                 wmr100Device.Error += Wmr100Device_Error;
 
@@ -47,9 +40,7 @@ namespace WMR100.NET.ConsoleDemo
         {
             Console.WriteLine(string.Format("Device error. Exception: {0}", e.GetException()));
 
-            var wmr100Device = sender as Wmr100Device;
-
-            if (wmr100Device != null)
+            if (sender is Wmr100Device wmr100Device)
             {
                 Console.WriteLine("Stopping device...");
                 wmr100Device.Stop();
@@ -70,13 +61,11 @@ namespace WMR100.NET.ConsoleDemo
             }
         }
 
-        private static void Wmr100Device_DataRecieved(object sender, DataRecievedEventArgs e)
+        private static void Wmr100Device_DataReceived(object sender, DataReceivedEventArgs e)
         {
             Console.WriteLine(string.Format("Data received: {0}", ByteArrayUtils.ByteArrayToString(e.PacketData)));
 
-            Wmr100Data wmr100Data = null;
-
-            if (Wmr100Data.TryDecode(e.PacketData, out wmr100Data))
+            if (Wmr100Data.TryDecode(e.PacketData, out Wmr100Data wmr100Data))
             {
                 Console.WriteLine(string.Format("Decoded data: {0}", Newtonsoft.Json.JsonConvert.SerializeObject(wmr100Data)));
             }

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
-using WMR100.NET.Data;
 using WMR100.NET.Helpers;
 
 namespace WMR100.NET
 {
-
-    public delegate void DataRecievedEventHandler(object sender, DataRecievedEventArgs e);
+    public delegate void DataReceivedEventHandler(object sender, DataReceivedEventArgs e);
 
     public delegate void DataDecodeErrorEventHandler(object sender, DataDecodeErrorEventArgs e);
 
@@ -22,18 +20,18 @@ namespace WMR100.NET
 
         private volatile bool stopped = false;
 
-        private IWmrUsbDevice wmrUsbDevice;
-        private Wmr100DataFrameAssembler dataFrameAssembler;
+        private readonly IWmrUsbDevice wmrUsbDevice;
+        private readonly IWmr100DataFrameAssembler wmrDataFrameAssembler;
 
-        public event DataRecievedEventHandler DataRecieved;
+        public event DataReceivedEventHandler DataReceived;
         public event DataDecodeErrorEventHandler DataDecodeError;
         public event DataErrorEventHandler DataError;
         public event ErrorEventHandler Error;
 
-        public Wmr100Device(IWmrUsbDevice wmrUsbDevice)
+        public Wmr100Device(IWmrUsbDevice wmrUsbDevice, IWmr100DataFrameAssembler wmrDataFrameAssembler)
         {
             this.wmrUsbDevice = wmrUsbDevice;
-            this.dataFrameAssembler = new Wmr100DataFrameAssembler();
+            this.wmrDataFrameAssembler = wmrDataFrameAssembler;
         }
 
         public virtual void Init()
@@ -48,7 +46,7 @@ namespace WMR100.NET
             {
                 try
                 {
-                    var dataFrames = dataFrameAssembler.Assemble(wmrUsbDevice.Read());
+                    var dataFrames = wmrDataFrameAssembler.Assemble(wmrUsbDevice.Read());
 
                     foreach (var dataFrame in dataFrames)
                     {
@@ -60,13 +58,11 @@ namespace WMR100.NET
 
                         if (checksumValid && lengthValid)
                         {
-                            Wmr100Data wmr100Data = null;
-
-                            bool success = Wmr100Data.TryDecode(dataFrame.GetPacketData(), out wmr100Data);
+                            bool success = Wmr100Data.TryDecode(dataFrame.GetPacketData(), out Wmr100Data wmr100Data);
 
                             if (success)
                             {
-                                DataRecieved?.Invoke(this, new DataRecievedEventArgs(dataFrame.GetPacketData(), wmr100Data));
+                                DataReceived?.Invoke(this, new DataReceivedEventArgs(dataFrame.GetPacketData(), wmr100Data));
                             }
                             else
                             {

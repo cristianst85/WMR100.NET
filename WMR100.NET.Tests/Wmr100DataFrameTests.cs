@@ -1,10 +1,8 @@
 ﻿using NUnit.Framework;
-using WMR100.NET.Data;
 using WMR100.NET.Helpers;
 
-namespace WMR100.NET.Tests.Data
+namespace WMR100.NET.Tests
 {
-
     [TestFixture]
     public class Wmr100DataFrameTests
     {

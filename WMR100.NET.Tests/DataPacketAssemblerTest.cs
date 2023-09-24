@@ -5,12 +5,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using WMR100.NET.Helpers;
 
-namespace WMR100.NET.Tests.Data
+namespace WMR100.NET.Tests
 {
-    using WMR100.NET.Data;
-    using WMR100.NET.Helpers;
-
     [TestFixture]
     public class DataPacketAssemblerTest
     {
@@ -40,12 +38,14 @@ namespace WMR100.NET.Tests.Data
             CollectionAssert.AreEqual(ByteArrayUtils.StringToByteArray(expectedFrames), frames.Select(x => x.Data));
         }
 
-        private static IEnumerable TestCases()
+        private static IEnumerable TestCases
         {
-            yield return new TestCaseData(new Collection<string> { }, new Collection<string> { });
+            get
+            {
+                yield return new TestCaseData(new Collection<string> { }, new Collection<string> { });
 
-            yield return new TestCaseData(
-                new Collection<string> {
+                yield return new TestCaseData(
+                    new Collection<string> {
                     "0629003000302100",
                     "01FF3041026F0029",
                     "06FF406000003829",
@@ -56,13 +56,14 @@ namespace WMR100.NET.Tests.Data
                     "0221010030003000",
                     "01FF010030003000",
                     "06FF404200150100"
-                },
-                new Collection<string>
-                {
+                    },
+                    new Collection<string>
+                    {
                     "FFFF40600000380204061102F700",
                     "FFFF404200150129003000302101"
-                }
-            );
+                    }
+                );
+            }
         }
     }
 }

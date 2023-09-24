@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
-namespace WMR100.NET.Data
+namespace WMR100.NET
 {
-    public class Wmr100DataFrameAssembler
+    public class Wmr100DataFrameAssembler : IWmr100DataFrameAssembler
     {
-        private byte[] buffer = new byte[256];
+        private readonly byte[] buffer = new byte[256];
         private int bufferPos = -1;
 
         public ICollection<Wmr100DataFrame> Assemble(byte[] usbDataBlock)

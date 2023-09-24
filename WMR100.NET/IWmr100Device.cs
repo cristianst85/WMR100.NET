@@ -8,7 +8,7 @@ namespace WMR100.NET
 
         event DataErrorEventHandler DataError;
 
-        event DataRecievedEventHandler DataRecieved;
+        event DataReceivedEventHandler DataReceived;
 
         event ErrorEventHandler Error;
 
