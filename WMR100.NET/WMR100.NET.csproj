@@ -52,6 +52,7 @@
     <Compile Include="Data\Wmr100DataFrameAssembler.cs" />
     <Compile Include="Data\Wmr100DataFrame.cs" />
     <Compile Include="IWmr100Device.cs" />
+    <Compile Include="Properties\GeneratedAssemblyInfo.cs" />
     <Compile Include="SensorData\RFClockSignalLevelStatus.cs" />
     <Compile Include="WmrUsbSetupPacket.cs" />
     <None Include="app.config" />
@@ -75,6 +76,7 @@
     <Compile Include="WmrUsbDevice.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\GitAssemblyVersion.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
