@@ -48,7 +48,7 @@
   <ItemGroup>
     <Compile Include="Wmr100DataTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DataPacketAssemblerTest.cs" />
+    <Compile Include="Wmr100DataFrameAssemblerTests.cs" />
     <Compile Include="Wmr100DataFrameTests.cs" />
   </ItemGroup>
   <ItemGroup>
