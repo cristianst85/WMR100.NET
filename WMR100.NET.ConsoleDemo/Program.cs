@@ -27,6 +27,7 @@ namespace WMR100.NET.ConsoleDemo
                 wmr100Device.Init();
 
                 wmr100Device.DataReceived += Wmr100Device_DataReceived;
+                wmr100Device.DataDecodeError += Wmr100Device_DataDecodeError;
                 wmr100Device.DataError += Wmr100Device_DataError;
                 wmr100Device.Error += Wmr100Device_Error;
 
@@ -36,6 +37,11 @@ namespace WMR100.NET.ConsoleDemo
 
             LogToConsole("Application was closed.");
             Environment.Exit(0);
+        }
+
+        private static void Wmr100Device_DataDecodeError(object sender, DataDecodeErrorEventArgs e)
+        {
+            LogToConsole($"Cannot decode packet data: {ByteArrayUtils.ByteArrayToString(e.PacketData)}");
         }
 
         private static void UsbDevice_UsbErrorEvent(object sender, UsbError e)
@@ -70,16 +76,9 @@ namespace WMR100.NET.ConsoleDemo
 
         private static void Wmr100Device_DataReceived(object sender, DataReceivedEventArgs e)
         {
-            LogToConsole($"Data received: {ByteArrayUtils.ByteArrayToString(e.PacketData)}");
+            LogToConsole($"Data packet received: {ByteArrayUtils.ByteArrayToString(e.PacketData)}");
+            LogToConsole($"Decoded data: {JsonConvert.SerializeObject(e.Data)}");
 
-            if (Wmr100Data.TryDecode(e.PacketData, out Wmr100Data wmr100Data))
-            {
-                LogToConsole($"Decoded data: {JsonConvert.SerializeObject(wmr100Data)}");
-            }
-            else
-            {
-                LogToConsole($"Cannot decode data.");
-            }
         }
 
         private static void LogToConsole(string message)
