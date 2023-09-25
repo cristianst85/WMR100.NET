@@ -35,6 +35,7 @@ namespace WMR100.NET.ConsoleDemo
             }
 
             LogToConsole("Application was closed.");
+            Environment.Exit(0);
         }
 
         private static void UsbDevice_UsbErrorEvent(object sender, UsbError e)
