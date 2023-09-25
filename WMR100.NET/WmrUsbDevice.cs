@@ -58,7 +58,7 @@ namespace WMR100.NET
                 }
                 else
                 {
-                    InternalLog($"Found device with ID {usbDevice.Info.Descriptor.VendorID:x4}:{usbDevice.Info.Descriptor.ProductID:x4} {descriptor.GetName()}");
+                    InternalLog($"Found device with ID {usbDevice.Info.Descriptor.VendorID:x4}:{usbDevice.Info.Descriptor.ProductID:x4} {descriptor.GetName()}.");
                     IUsbDevice wholeUsbDevice = usbDevice as IUsbDevice;
 
                     if (!ReferenceEquals(wholeUsbDevice, null))

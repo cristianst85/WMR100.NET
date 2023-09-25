@@ -30,8 +30,11 @@ namespace WMR100.NET.ConsoleDemo
                 wmr100Device.DataError += Wmr100Device_DataError;
                 wmr100Device.Error += Wmr100Device_Error;
 
+                LogToConsole("Receiving data...");
                 wmr100Device.ReceiveData();
             }
+
+            LogToConsole("Application was closed.");
         }
 
         private static void UsbDevice_UsbErrorEvent(object sender, UsbError e)
