@@ -183,13 +183,10 @@ namespace WMR100.NET
                     {
                         if (usbDevice.IsOpen)
                         {
-                            var wholeUsbDevice = usbDevice as IUsbDevice;
-
-                            if (wholeUsbDevice != null)
+                            if (usbDevice is IUsbDevice wholeUsbDevice)
                             {
                                 // Release interface #0.
                                 bool success = wholeUsbDevice.ReleaseInterface(0);
-
                                 InternalLog($"{(success ? "Successfully released" : "Failed to release")} USB device interface #0.");
                             }
 
