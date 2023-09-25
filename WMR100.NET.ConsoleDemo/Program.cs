@@ -56,7 +56,7 @@ namespace WMR100.NET.ConsoleDemo
             if (sender is Wmr100Device wmr100Device)
             {
                 LogToConsole("Stopping device...");
-                wmr100Device.Stop();
+                Stop(wmr100Device);
             }
         }
 
@@ -78,7 +78,17 @@ namespace WMR100.NET.ConsoleDemo
         {
             LogToConsole($"Data packet received: {ByteArrayUtils.ByteArrayToString(e.PacketData)}");
             LogToConsole($"Decoded data: {JsonConvert.SerializeObject(e.Data)}");
+        }
 
+        private static void Stop(Wmr100Device wmr100Device)
+        {
+            wmr100Device.Stop();
+            wmr100Device.DataReceived -= Wmr100Device_DataReceived;
+            wmr100Device.DataDecodeError -= Wmr100Device_DataDecodeError;
+            wmr100Device.DataError -= Wmr100Device_DataError;
+            wmr100Device.Error -= Wmr100Device_Error;
+
+            UsbDevice.UsbErrorEvent -= UsbDevice_UsbErrorEvent;
         }
 
         private static void LogToConsole(string message)
