@@ -119,6 +119,11 @@ namespace WMR100.NET
 
         public byte[] Read()
         {
+            if (disposed)
+            {
+                throw new ObjectDisposedException(nameof(usbEndpointReader));
+            }
+
             byte[] buffer = new byte[8];
 
             ErrorCode errorCode = usbEndpointReader.Read(buffer, 30000, out int bytesRead);
@@ -138,6 +143,11 @@ namespace WMR100.NET
 
         public void Write(byte[] buffer)
         {
+            if (disposed)
+            {
+                throw new ObjectDisposedException(nameof(usbDevice));
+            }
+
             var usbSetupPacket = WmrUsbSetupPacket.Create();
             bool success = usbDevice.ControlTransfer(ref usbSetupPacket, buffer, buffer.Length, out int bytesTransferred);
 
