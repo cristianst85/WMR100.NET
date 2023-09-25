@@ -16,13 +16,13 @@
         {
             get
             {
-                return new VidPidDescriptor(0x0fde, 0xca01, "Oregon Scientific", "Weather Station");
+                return new VidPidDescriptor(0x0fde, 0xca01, "Oregon Scientific", "WMRS200 Weather Station");
             }
         }
 
         public string GetName()
         {
-            return string.Format("{0}, {1}", this.Vendor.Name, this.Product.Name);
+            return string.Format("{0} {1}", this.Vendor.Name, this.Product.Name);
         }
     }
 
