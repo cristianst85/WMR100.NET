@@ -32,7 +32,7 @@ namespace WMR100.NET
     /// Source: http://www.cs.stir.ac.uk/~kjt/software/comms/wmr180.html
     /// </para>
     /// </summary>
-    public class Wmr100DataFrame
+    internal class Wmr100DataFrame
     {
         public static readonly byte Delimiter = 0xff;
 

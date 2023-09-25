@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace WMR100.NET
 {
-    public class Wmr100DataFrameAssembler : IWmr100DataFrameAssembler
+    internal class Wmr100DataFrameAssembler
     {
         private readonly byte[] buffer = new byte[256];
         private int bufferPos = -1;

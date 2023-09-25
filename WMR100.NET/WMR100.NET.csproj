@@ -47,10 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\ByteArrayUtils.cs" />
-    <Compile Include="Helpers\VidPidDescriptor.cs" />
+    <Compile Include="VidPidDescriptor.cs" />
     <Compile Include="DataDecodeErrorEventArgs.cs" />
     <Compile Include="DataErrorEventArgs.cs" />
-    <Compile Include="IWmr100DataFrameAssembler.cs" />
     <Compile Include="Wmr100DataFrameAssembler.cs" />
     <Compile Include="Wmr100DataFrame.cs" />
     <Compile Include="IWmr100Device.cs" />
@@ -63,12 +62,11 @@
     <Compile Include="SensorData\PowerConnectorStatus.cs" />
     <Compile Include="SensorData\Wmr100SensorType.cs" />
     <Compile Include="SensorData\ClockData.cs" />
-    <Compile Include="SensorData\IWmr100SensorData.cs" />
+    <Compile Include="IWmr100SensorData.cs" />
     <Compile Include="IWmr100Data.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SensorData\ComfortLevelType.cs" />
     <Compile Include="SensorData\TrendType.cs" />
-    <Compile Include="IWmrUsbDevice.cs" />
     <Compile Include="DataReceivedEventArgs.cs" />
     <Compile Include="Wmr100DataType.cs" />
     <Compile Include="Wmr100Device.cs" />

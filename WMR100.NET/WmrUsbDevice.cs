@@ -6,7 +6,7 @@ using System;
 
 namespace WMR100.NET
 {
-    public class WmrUsbDevice : IDisposable, IWmrUsbDevice
+    internal class WmrUsbDevice : IDisposable
     {
         public static Action<string> Log;
 
@@ -59,9 +59,8 @@ namespace WMR100.NET
                 else
                 {
                     InternalLog($"Found device with ID {usbDevice.Info.Descriptor.VendorID:x4}:{usbDevice.Info.Descriptor.ProductID:x4} {descriptor.GetName()}.");
-                    IUsbDevice wholeUsbDevice = usbDevice as IUsbDevice;
 
-                    if (!ReferenceEquals(wholeUsbDevice, null))
+                    if (usbDevice is IUsbDevice wholeUsbDevice)
                     {
                         // Select configuration #1.
                         bool success = wholeUsbDevice.SetConfiguration(1);
@@ -149,7 +148,7 @@ namespace WMR100.NET
             }
 
             var usbSetupPacket = WmrUsbSetupPacket.Create();
-            bool success = usbDevice.ControlTransfer(ref usbSetupPacket, buffer, buffer.Length, out int bytesTransferred);
+            bool success = usbDevice.ControlTransfer(ref usbSetupPacket, buffer, buffer.Length, out _);
 
             if (!success)
             {

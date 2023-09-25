@@ -2,7 +2,7 @@
 
 namespace WMR100.NET
 {
-    public static class WmrUsbSetupPacket
+    internal static class WmrUsbSetupPacket
     {
         /// <summary>
         /// <para>Direction: Host-to-Device (0)</para>

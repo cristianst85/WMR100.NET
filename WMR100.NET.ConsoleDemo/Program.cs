@@ -10,7 +10,7 @@ namespace WMR100.NET.ConsoleDemo
     {
         public static void Main()
         {
-            var t = Type.GetType("Mono.Runtime") ?? throw new NotImplementedException();
+            _ = Type.GetType("Mono.Runtime") ?? throw new NotImplementedException();
             InitMono();
         }
 
@@ -18,12 +18,10 @@ namespace WMR100.NET.ConsoleDemo
         {
             // Subscribe to this event to see the errors from low-level API.
             UsbDevice.UsbErrorEvent += UsbDevice_UsbErrorEvent;
-            WmrUsbDevice.Log += (message) => LogToConsole(message);
+            Wmr100Device.Log += (message) => LogToConsole(message);
 
-            using (var wmrUsbDevice = WmrUsbDevice.Create())
+            using (var wmr100Device = Wmr100Device.Create())
             {
-                var wmr100Device = new Wmr100Device(wmrUsbDevice, new Wmr100DataFrameAssembler());
-
                 wmr100Device.Init();
 
                 wmr100Device.DataReceived += Wmr100Device_DataReceived;

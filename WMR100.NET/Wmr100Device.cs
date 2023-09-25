@@ -11,8 +11,10 @@ namespace WMR100.NET
 
     public delegate void DataErrorEventHandler(object sender, DataErrorEventArgs e);
 
-    public class Wmr100Device : IWmr100Device
+    public class Wmr100Device : IWmr100Device, IDisposable
     {
+        public static Action<string> Log;
+
         public static readonly VidPidDescriptor Descriptor = VidPidDescriptor.Wmr100;
 
         private static readonly byte[] initRequest = { 0x20, 0x00, 0x08, 0x01, 0x00, 0x00, 0x00, 0x00 };
@@ -20,15 +22,21 @@ namespace WMR100.NET
 
         private volatile bool stopped = false;
 
-        private readonly IWmrUsbDevice wmrUsbDevice;
-        private readonly IWmr100DataFrameAssembler wmrDataFrameAssembler;
+        private readonly WmrUsbDevice wmrUsbDevice;
+        private readonly Wmr100DataFrameAssembler wmrDataFrameAssembler;
 
         public event DataReceivedEventHandler DataReceived;
         public event DataDecodeErrorEventHandler DataDecodeError;
         public event DataErrorEventHandler DataError;
         public event ErrorEventHandler Error;
 
-        public Wmr100Device(IWmrUsbDevice wmrUsbDevice, IWmr100DataFrameAssembler wmrDataFrameAssembler)
+        public static Wmr100Device Create()
+        {
+            WmrUsbDevice.Log += (message) => Log(message);
+            return new Wmr100Device(WmrUsbDevice.Create(), new Wmr100DataFrameAssembler());
+        }
+
+        private Wmr100Device(WmrUsbDevice wmrUsbDevice, Wmr100DataFrameAssembler wmrDataFrameAssembler)
         {
             this.wmrUsbDevice = wmrUsbDevice;
             this.wmrDataFrameAssembler = wmrDataFrameAssembler;
@@ -88,9 +96,15 @@ namespace WMR100.NET
             }
         }
 
-        public void Stop()
+        public virtual void Stop()
         {
-            this.stopped = true;
+            stopped = true;
+        }
+
+        public void Dispose()
+        {
+            Stop();
+            wmrUsbDevice?.Dispose();
         }
     }
 }

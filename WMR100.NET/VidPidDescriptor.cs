@@ -1,4 +1,4 @@
-﻿namespace WMR100.NET.Helpers
+﻿namespace WMR100.NET
 {
     public sealed class VidPidDescriptor
     {
