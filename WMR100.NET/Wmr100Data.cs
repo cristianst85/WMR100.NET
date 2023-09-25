@@ -19,7 +19,6 @@ namespace WMR100.NET
         public static bool TryDecode(byte[] packetData, out Wmr100Data wmr100Data)
         {
             wmr100Data = null;
-
             byte dataType = packetData[1];
 
             if (dataType == (byte)Wmr100DataType.Clock)
@@ -45,9 +44,8 @@ namespace WMR100.NET
 
                 var clock = new DateTime(year, month, day, hour, minute, 0, DateTimeKind.Local);
                 var clockData = new ClockData(clock, timeZoneOffset, isPowered, hasLowBattery, isRFSyncEnabled, isRFLevelStrong);
-
+                
                 wmr100Data = clockData;
-
                 return true;
             }
             else if (dataType == (byte)Wmr100DataType.TemperatureHumidity)
@@ -79,22 +77,21 @@ namespace WMR100.NET
 
                 bool isHeatIndexValid = !Convert.ToBoolean((packetData[9] & 0x20) >> 5);
 
-                decimal? heatIndex = null;
+                var heatIndex = default(decimal?);
                 if (isHeatIndexValid)
                 {
                     // Heat index is in Fahrenheit.
                     heatIndex = (packetData[8] + ((packetData[9] & 0x0f) << 8)) / 10.0m;
                 }
 
-                TemperatureHumidityData temperatureHumidityData = new TemperatureHumidityData(sensorId, temperature, temperatureTrend, humidity, humidityTrend, dewPoint, comfortLevel, heatIndex, hasLowBattery);
+                var temperatureHumidityData = new TemperatureHumidityData(sensorId, temperature, temperatureTrend, humidity, humidityTrend, dewPoint, comfortLevel, heatIndex, hasLowBattery);
 
                 wmr100Data = temperatureHumidityData;
-
                 return true;
             }
             else
             {
-                return false; // Not implemented yet :)
+                return false; // Not implemented yet.
             }
         }
     }
