@@ -43,7 +43,7 @@ namespace WMR100.NET
                 }
 
                 var clock = new DateTime(year, month, day, hour, minute, 0, DateTimeKind.Local);
-                var clockData = new ClockData(clock, timeZoneOffset, isPowered, hasLowBattery, isRFSyncEnabled, isRFLevelStrong);
+                var clockData = new ClockData(clock, timeZoneOffset, isRFSyncEnabled, isRFLevelStrong, isPowered, hasLowBattery);
                 
                 wmr100Data = clockData;
                 return true;

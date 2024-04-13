@@ -16,32 +16,32 @@ namespace WMR100.NET.SensorData
 
         public int TimeZoneOffset { get; private set; }
 
-        public PowerConnectorStatus PowerConnectorStatus { get; private set; }
-
-        public BatteryLevelStatus BatteryLevelStatus { get; private set; }
-
         public RFClockSyncStatus RFClockSyncStatus { get; private set; }
 
         public RFClockSignalLevelStatus RFClockSignalLevelStatus { get; private set; }
 
-        public ClockData(DateTime clock, int timeZoneOffset, PowerConnectorStatus powerConnectorStatus, BatteryLevelStatus batteryLevelStatus, RFClockSyncStatus rfClockSyncStatus, RFClockSignalLevelStatus rfClockSignalLevelStatus)
+        public PowerConnectorStatus PowerConnectorStatus { get; private set; }
+
+        public BatteryLevelStatus BatteryLevelStatus { get; private set; }
+
+        public ClockData(DateTime clock, int timeZoneOffset, RFClockSyncStatus rfClockSyncStatus, RFClockSignalLevelStatus rfClockSignalLevelStatus, PowerConnectorStatus powerConnectorStatus, BatteryLevelStatus batteryLevelStatus)
         {
             this.Clock = clock;
             this.TimeZoneOffset = timeZoneOffset;
-            this.PowerConnectorStatus = powerConnectorStatus;
-            this.BatteryLevelStatus = batteryLevelStatus;
             this.RFClockSyncStatus = rfClockSyncStatus;
             this.RFClockSignalLevelStatus = rfClockSignalLevelStatus;
+            this.PowerConnectorStatus = powerConnectorStatus;
+            this.BatteryLevelStatus = batteryLevelStatus;
         }
 
-        public ClockData(DateTime clock, int timeZoneOffset, bool isPowered, bool hasLowBattery, bool isRFSyncEnabled, bool isRFLevelStrong)
+        public ClockData(DateTime clock, int timeZoneOffset, bool isRFSyncEnabled, bool isRFLevelStrong, bool isPowered, bool hasLowBattery)
         {
             this.Clock = clock;
             this.TimeZoneOffset = timeZoneOffset;
-            this.PowerConnectorStatus = isPowered ? PowerConnectorStatus.Connected : PowerConnectorStatus.NotConnected;
-            this.BatteryLevelStatus = hasLowBattery ? BatteryLevelStatus.Low : BatteryLevelStatus.Normal;
             this.RFClockSyncStatus = isRFSyncEnabled ? RFClockSyncStatus.Enabled : RFClockSyncStatus.Disabled;
             this.RFClockSignalLevelStatus = isRFLevelStrong ? RFClockSignalLevelStatus.Strong : RFClockSignalLevelStatus.Weak;
+            this.PowerConnectorStatus = isPowered ? PowerConnectorStatus.Connected : PowerConnectorStatus.NotConnected;
+            this.BatteryLevelStatus = hasLowBattery ? BatteryLevelStatus.Low : BatteryLevelStatus.Normal;
         }
 
         public override int GetHashCode()
@@ -73,10 +73,10 @@ namespace WMR100.NET.SensorData
 
             return Clock == other.Clock &&
                 TimeZoneOffset == other.TimeZoneOffset &&
-                PowerConnectorStatus == other.PowerConnectorStatus &&
-                BatteryLevelStatus == other.BatteryLevelStatus &&
                 RFClockSyncStatus == other.RFClockSyncStatus &&
-                RFClockSignalLevelStatus == other.RFClockSignalLevelStatus;
+                RFClockSignalLevelStatus == other.RFClockSignalLevelStatus &&
+                PowerConnectorStatus == other.PowerConnectorStatus &&
+                BatteryLevelStatus == other.BatteryLevelStatus;
         }
     }
 }

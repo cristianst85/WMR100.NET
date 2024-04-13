@@ -27,17 +27,17 @@ namespace WMR100.NET.Tests
             {
                 yield return new TestCaseData(
                     "406000001F080C061102EC00",
-                    new ClockData(new DateTime(2017, 06, 12, 08, 31, 00, DateTimeKind.Local), 02, PowerConnectorStatus.NotConnected, BatteryLevelStatus.Low, RFClockSyncStatus.Disabled, RFClockSignalLevelStatus.Weak)
+                    new ClockData(new DateTime(2017, 06, 12, 08, 31, 00, DateTimeKind.Local), 02, RFClockSyncStatus.Disabled, RFClockSignalLevelStatus.Weak, PowerConnectorStatus.NotConnected, BatteryLevelStatus.Low)
                 ).SetDescription("Oregon Scientific RMS600");
 
                 yield return new TestCaseData(
                     "4060000026150F0611FDFE01",
-                    new ClockData(new DateTime(2017, 06, 15, 21, 38, 00, DateTimeKind.Local), -03, PowerConnectorStatus.NotConnected, BatteryLevelStatus.Low, RFClockSyncStatus.Disabled, RFClockSignalLevelStatus.Weak)
+                    new ClockData(new DateTime(2017, 06, 15, 21, 38, 00, DateTimeKind.Local), -03, RFClockSyncStatus.Disabled, RFClockSignalLevelStatus.Weak, PowerConnectorStatus.NotConnected, BatteryLevelStatus.Low)
                 ).SetDescription("Oregon Scientific RMS600");
 
                 yield return new TestCaseData(
                     "4060000028010F0611E9D801",
-                    new ClockData(new DateTime(2017, 06, 15, 01, 40, 00, DateTimeKind.Local), -23, PowerConnectorStatus.NotConnected, BatteryLevelStatus.Low, RFClockSyncStatus.Disabled, RFClockSignalLevelStatus.Weak)
+                    new ClockData(new DateTime(2017, 06, 15, 01, 40, 00, DateTimeKind.Local), -23, RFClockSyncStatus.Disabled, RFClockSignalLevelStatus.Weak, PowerConnectorStatus.NotConnected, BatteryLevelStatus.Low)
                 ).SetDescription("Oregon Scientific RMS600");
 
                 yield return new TestCaseData(
@@ -81,7 +81,7 @@ namespace WMR100.NET.Tests
 
                 yield return new TestCaseData(
                     "106000001512120408813601",
-                    new ClockData(new DateTime(2008, 04, 18, 18, 21, 00, DateTimeKind.Local), -1, PowerConnectorStatus.NotConnected, BatteryLevelStatus.Normal, RFClockSyncStatus.Enabled, RFClockSignalLevelStatus.Weak)
+                    new ClockData(new DateTime(2008, 04, 18, 18, 21, 00, DateTimeKind.Local), -1, RFClockSyncStatus.Enabled, RFClockSignalLevelStatus.Weak, PowerConnectorStatus.NotConnected, BatteryLevelStatus.Normal)
                ).SetDescription("Decode_WMR100-200_v5.xlsm").Ignore("TODO: Need to figure out why this fails!");
             }
         }
