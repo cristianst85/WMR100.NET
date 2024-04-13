@@ -3,24 +3,24 @@
     public enum ComfortLevelType
     {
         /// <summary>
-        /// No smiley
+        /// No smiley.
         /// </summary>
         Unknown = 0,
 
         /// <summary>
-        /// Happy face
+        /// Happy face.
         /// <para>:-)</para>
         /// </summary>
         Good = 1,
 
         /// <summary>
-        /// Sad face
+        /// Sad face.
         /// <para>:-(</para>
         /// </summary>
         Poor = 2,
 
         /// <summary>
-        /// Straight face
+        /// Straight face.
         /// <para>:-|</para>
         /// </summary>
         Fair = 3
