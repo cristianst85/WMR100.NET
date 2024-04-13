@@ -37,6 +37,9 @@
   <PropertyGroup>
     <StartupObject>WMR100.NET.ConsoleDemo.Program</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="LibUsbDotNet.LibUsbDotNet">
       <HintPath>..\libs\LibUsbDotNet.LibUsbDotNet.dll</HintPath>
