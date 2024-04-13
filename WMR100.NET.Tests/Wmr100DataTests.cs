@@ -17,8 +17,8 @@ namespace WMR100.NET.Tests
             Console.WriteLine("Actual result: " + Newtonsoft.Json.JsonConvert.SerializeObject(wmr100Data));
             Console.WriteLine("Expected result: " + Newtonsoft.Json.JsonConvert.SerializeObject(expectedResult));
 
-            Assert.IsTrue(success);
-            Assert.AreEqual(expectedResult, wmr100Data);
+            Assert.That(success, Is.True);
+            Assert.That(expectedResult, Is.EqualTo(wmr100Data));
         }
 
         private static IEnumerable TestCases

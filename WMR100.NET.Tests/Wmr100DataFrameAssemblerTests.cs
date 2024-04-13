@@ -35,7 +35,7 @@ namespace WMR100.NET.Tests
                 Debug.WriteLine(BitConverter.ToString(ByteArrayUtils.StringToByteArray(frame)).Replace("-", string.Empty));
             }
 
-            CollectionAssert.AreEqual(ByteArrayUtils.StringToByteArray(expectedFrames), frames.Select(x => x.Data));
+            Assert.That(ByteArrayUtils.StringToByteArray(expectedFrames), Is.EqualTo(frames.Select(x => x.Data)));
         }
 
         private static IEnumerable TestCases
