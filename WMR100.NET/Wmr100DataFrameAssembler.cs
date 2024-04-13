@@ -22,6 +22,7 @@ namespace WMR100.NET
             /// the weather station arrives in bursts roughly every minute, using data it
             /// has previously accumulated.
             /// Source: http://www.cs.stir.ac.uk/~kjt/software/comms/wmr180.html
+            /// or https://web.archive.org/web/20200107095622/https://www.cs.stir.ac.uk/~kjt/software/comms/wmr180.html
 
             Array.Copy(usbDataBlock, 1, buffer, bufferPos + 1, usbDataBlock[0]);
             bufferPos += usbDataBlock[0];

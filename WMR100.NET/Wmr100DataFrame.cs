@@ -30,6 +30,7 @@ namespace WMR100.NET
     /// 
     /// <para>
     /// Source: http://www.cs.stir.ac.uk/~kjt/software/comms/wmr180.html
+    /// or https://web.archive.org/web/20200107095622/https://www.cs.stir.ac.uk/~kjt/software/comms/wmr180.html
     /// </para>
     /// </summary>
     internal class Wmr100DataFrame
