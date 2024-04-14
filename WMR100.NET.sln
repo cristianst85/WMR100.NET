@@ -7,10 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMR100.NET", "WMR100.NET\WM
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{10820CE5-C393-469A-9E08-A395EC51E97B}"
 	ProjectSection(SolutionItems) = preProject
-		build.bat = build.bat
-		commands.json = commands.json
-		deploy.bat = deploy.bat
+		CHANGELOG.md = CHANGELOG.md
+		COPYING = COPYING
 		GitAssemblyVersion.targets = GitAssemblyVersion.targets
+		LICENSE = LICENSE
+		README.md = README.md
+		WMR100.NET.nuspec = WMR100.NET.nuspec
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMR100.NET.Tests", "WMR100.NET.Tests\WMR100.NET.Tests.csproj", "{1457E67C-B614-46C2-B65F-A31425CF6B60}"

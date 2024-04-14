@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("WMR100.NET")]
-[assembly: AssemblyDescription(".NET library to interface with Oregon Scientific weather stations that are compatible with the WMR100 protocol.")]
+[assembly: AssemblyDescription("A .NET library to interface with Oregon Scientific weather stations that are compatible with the WMR100 protocol.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Cristian Stoica")]
 [assembly: AssemblyProduct("WMR100.NET")]
-[assembly: AssemblyCopyright("Copyright © 2017-2023 Cristian Stoica")]
+[assembly: AssemblyCopyright("Copyright © 2017-2024 Cristian Stoica")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,6 +32,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.5.0")]
-[assembly: AssemblyFileVersion("0.5.0.0")]
+[assembly: AssemblyVersion("0.6.0")]
+[assembly: AssemblyFileVersion("0.6.0.0")]
 [assembly: InternalsVisibleTo("WMR100.NET.Tests")]

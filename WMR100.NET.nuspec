@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>WMR100.NET</id>
+    <version>0.6.0</version>
+    <title>WMR100.NET</title>
+    <authors>Cristian Stoica</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE</license>
+    <readme>README.md</readme>
+    <!-- <icon>icon.png</icon> -->
+    <projectUrl>https://github.com/cristianst85/WMR100.NET</projectUrl>
+    <description>A .NET library to interface with Oregon Scientific weather stations that are compatible with the WMR100 protocol. Currently the library offers limited support and can only decode Clock and Temperature/Humidity data.</description>
+    <copyright>Copyright (c) 2017-2024 Cristian Stoica</copyright>
+    <tags>Oregon Scientific weather station WMR100 temperature humidity RMS600</tags>
+    <dependencies>
+      <group targetFramework="net462">
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="COPYING" target="COPYING" />
+    <file src="LICENSE" target="LICENSE" />
+    <file src="README.md" target="README.md" />
+    <file src="WMR100.NET\bin\Release\WMR100.NET.dll" target="lib\net462\" />
+    <file src="WMR100.NET\bin\Release\WMR100.NET.pdb" target="lib\net462\" />
+    <!-- <file src="WMR100.NET\bin\Release\WMR100.NET.xml" target="lib\net462" /> -->
+    <file src="WMR100.NET\bin\release\LibUsbDotNet.LibUsbDotNet.dll" target="lib\net462" />
+    <file src="WMR100.NET\bin\release\LibUsbDotNet.LibUsbDotNet.pdb" target="lib\net462" />
+    <file src="WMR100.NET\bin\release\LibUsbDotNet.LibUsbDotNet.xml" target="lib\net462" />
+  </files>
+</package>

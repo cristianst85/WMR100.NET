@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WMR100.NET.Tests")]
-[assembly: AssemblyDescription("WMR100.NET.Tests")]
+[assembly: AssemblyTitle("WMR100.NET Unit Tests")]
+[assembly: AssemblyDescription("WMR100.NET unit tests library.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Cristian Stoica")]
-[assembly: AssemblyProduct("WMR100.NET.Tests")]
-[assembly: AssemblyCopyright("Copyright © 2017-2023 Cristian Stoica")]
+[assembly: AssemblyProduct("WMR100.NET Unit Tests")]
+[assembly: AssemblyCopyright("Copyright © 2017-2024 Cristian Stoica")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("0.6.0")]
+[assembly: AssemblyFileVersion("0.6.0.0")]
