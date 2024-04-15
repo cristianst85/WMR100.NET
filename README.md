@@ -1,6 +1,6 @@
 # WMR100.NET
 
-A .NET library to interface with Oregon Scientific weather stations that are compatible with the WMR100 protocol. Currently the library offers limited support and can only decode `Clock` and `Temperature/Humidity` data. Is uses the [LibUsbDotNet](https://github.com/LibUsbDotNet/LibUsbDotNet) library to handle the USB communication.
+A .NET library to interface with Oregon Scientific weather stations that are compatible with the WMR100 protocol. Currently the library offers limited support and can only decode `Clock` and `Temperature/Humidity` data. It uses the [LibUsbDotNet](https://github.com/LibUsbDotNet/LibUsbDotNet) library to handle the USB communication.
 
 [![NuGet Version (WMR100.NET)](https://img.shields.io/nuget/v/WMR100.NET.svg)](https://www.nuget.org/packages/WMR100.NET/)
 [![License: GNU GPL v2](https://img.shields.io/badge/License-GPL_v2-blue.svg)](https://github.com/cristianst85/WMR100.NET/blob/master/LICENSE)
