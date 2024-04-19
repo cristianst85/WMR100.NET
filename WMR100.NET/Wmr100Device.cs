@@ -31,7 +31,11 @@ namespace WMR100.NET
 
         public static Wmr100Device Create()
         {
-            WmrUsbDevice.Log += (message) => Log(message);
+            if (Log != null)
+            {
+                WmrUsbDevice.Log += (message) => Log(message);
+            }
+
             return new Wmr100Device(WmrUsbDevice.Create(), new Wmr100DataFrameAssembler());
         }
 
