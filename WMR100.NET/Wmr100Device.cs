@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
-using WMR100.NET.Helpers;
 
 namespace WMR100.NET
 {
