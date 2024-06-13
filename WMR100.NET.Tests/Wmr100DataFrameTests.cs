@@ -9,6 +9,7 @@ namespace WMR100.NET.Tests
         [TestCase("FFFF40600000380204061102F700", true)]
         [TestCase("FFFF404200150129003000302101", true)]
         [TestCase("FFFF404200150129003000312101", false)]
+        [TestCase("FFFF", false)]
         public void IsChecksumValid(string frame, bool expectedResult)
         {
             Assert.That(new Wmr100DataFrame(ByteArrayUtils.StringToByteArray(frame)).IsChecksumValid(), Is.EqualTo(expectedResult));
@@ -17,6 +18,7 @@ namespace WMR100.NET.Tests
         [TestCase("FFFF40600000380204061102F700", true)]
         [TestCase("FFFF404200150129003000302101", true)]
         [TestCase("FFFF40420015012900300030002101", false)]
+        [TestCase("FFFF", false)]
         public void IsLengthValid(string frame, bool expectedResult)
         {
             Assert.That(new Wmr100DataFrame(ByteArrayUtils.StringToByteArray(frame)).IsLengthValid(), Is.EqualTo(expectedResult));

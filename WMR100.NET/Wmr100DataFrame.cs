@@ -63,7 +63,7 @@ namespace WMR100.NET
             // Length without the two frame delimiters.
             var packetLength = Data.Length - 2;
 
-            if (packetLength < 0)
+            if (packetLength < 1)
             {
                 return false;
             }
