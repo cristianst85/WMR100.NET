@@ -49,10 +49,11 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataFrameErrorType.cs" />
     <Compile Include="Helpers\ByteArrayUtils.cs" />
     <Compile Include="VidPidDescriptor.cs" />
     <Compile Include="DataDecodeErrorEventArgs.cs" />
-    <Compile Include="DataErrorEventArgs.cs" />
+    <Compile Include="DataFrameErrorEventArgs.cs" />
     <Compile Include="Wmr100DataFrameAssembler.cs" />
     <Compile Include="Wmr100DataFrame.cs" />
     <Compile Include="IWmr100Device.cs" />

@@ -58,15 +58,15 @@ namespace WMR100.NET.ConsoleDemo
             }
         }
 
-        private static void Wmr100Device_DataError(object sender, DataErrorEventArgs e)
+        private static void Wmr100Device_DataError(object sender, DataFrameErrorEventArgs e)
         {
             var hexFrameData = ByteArrayUtils.ByteArrayToString(e.FrameData);
 
-            if (!e.ChecksumValid)
+            if (e.ErrorType == DataFrameErrorType.InvalidDataFrameChecksum)
             {
                 LogToConsole($"Bad data frame: {hexFrameData} (invalid checksum)");
             }
-            else if (!e.LengthValid)
+            else if (e.ErrorType == DataFrameErrorType.InvalidDataFrameLength)
             {
                 LogToConsole($"Bad data frame: {hexFrameData} (invalid length)");
             }

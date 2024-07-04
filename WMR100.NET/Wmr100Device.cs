@@ -8,7 +8,7 @@ namespace WMR100.NET
 
     public delegate void DataDecodeErrorEventHandler(object sender, DataDecodeErrorEventArgs e);
 
-    public delegate void DataErrorEventHandler(object sender, DataErrorEventArgs e);
+    public delegate void DataErrorEventHandler(object sender, DataFrameErrorEventArgs e);
 
     public class Wmr100Device : IWmr100Device, IDisposable
     {
@@ -63,27 +63,28 @@ namespace WMR100.NET
                     foreach (var dataFrame in dataFrames)
                     {
                         // Verify frame checksum.
-                        bool checksumValid = dataFrame.IsChecksumValid();
+                        if (!dataFrame.IsChecksumValid())
+                        {
+                            DataError?.Invoke(this, new DataFrameErrorEventArgs(dataFrame.Data, DataFrameErrorType.InvalidDataFrameChecksum));
+                            continue;
+                        }
 
                         // Verify frame length.
-                        bool lengthValid = dataFrame.IsLengthValid();
-
-                        if (checksumValid && lengthValid)
+                        if (!dataFrame.IsLengthValid())
                         {
-                            bool success = Wmr100Data.TryDecode(dataFrame.GetPacketData(), out Wmr100Data wmr100Data);
+                            DataError?.Invoke(this, new DataFrameErrorEventArgs(dataFrame.Data, DataFrameErrorType.InvalidDataFrameLength));
+                            continue;
+                        }
 
-                            if (success)
-                            {
-                                DataReceived?.Invoke(this, new DataReceivedEventArgs(dataFrame.GetPacketData(), wmr100Data));
-                            }
-                            else
-                            {
-                                DataDecodeError?.Invoke(this, new DataDecodeErrorEventArgs(dataFrame.GetPacketData()));
-                            }
+                        bool success = Wmr100Data.TryDecode(dataFrame.GetPacketData(), out Wmr100Data wmr100Data);
+
+                        if (success)
+                        {
+                            DataReceived?.Invoke(this, new DataReceivedEventArgs(dataFrame.GetPacketData(), wmr100Data));
                         }
                         else
                         {
-                            DataError?.Invoke(this, new DataErrorEventArgs(dataFrame.Data, checksumValid, lengthValid));
+                            DataDecodeError?.Invoke(this, new DataDecodeErrorEventArgs(dataFrame.GetPacketData()));
                         }
                     }
 
