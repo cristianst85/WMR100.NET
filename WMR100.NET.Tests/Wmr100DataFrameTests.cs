@@ -9,6 +9,8 @@ namespace WMR100.NET.Tests
         [TestCase("FFFF40600000380204061102F700", true)]
         [TestCase("FFFF404200150129003000302101", true)]
         [TestCase("FFFF404200150129003000312101", false)]
+        [TestCase("FFFF20422344004106000030400100420013011C00300030D200", false)]
+        [TestCase("FFFF0042001301", false)]
         [TestCase("FFFF", false)]
         public void IsChecksumValid(string frame, bool expectedResult)
         {
@@ -17,7 +19,9 @@ namespace WMR100.NET.Tests
 
         [TestCase("FFFF40600000380204061102F700", true)]
         [TestCase("FFFF404200150129003000302101", true)]
-        [TestCase("FFFF40420015012900300030002101", false)]
+        [TestCase("FFFF404200150129003000312101", true)]
+        [TestCase("FFFF20422344004106000030400100420013011C00300030D200", false)]
+        [TestCase("FFFF0042001301", false)]
         [TestCase("FFFF", false)]
         public void IsLengthValid(string frame, bool expectedResult)
         {
