@@ -30,15 +30,17 @@ namespace WMR100.NET.Tests
             }
 
             Debug.WriteLine("Resulted frames:");
+
             foreach (var frame in frames)
             {
-                Debug.WriteLine(BitConverter.ToString(frame.Data).Replace("-", string.Empty));
+                Debug.WriteLine(ByteArrayUtils.ByteArrayToString(frame.Data));
             }
 
             Debug.WriteLine("Expected frames:");
+
             foreach (var frame in expectedFrames)
             {
-                Debug.WriteLine(BitConverter.ToString(ByteArrayUtils.StringToByteArray(frame)).Replace("-", string.Empty));
+                Debug.WriteLine(frame);
             }
 
             Assert.That(frames.Select(x => x.Data), Is.EqualTo(ByteArrayUtils.StringToByteArray(expectedFrames)));
