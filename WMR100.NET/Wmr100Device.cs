@@ -76,7 +76,7 @@ namespace WMR100.NET
                             continue;
                         }
 
-                        bool success = Wmr100Data.TryDecode(dataFrame.GetPacketData(), out Wmr100Data wmr100Data);
+                        var success = Wmr100Data.TryDecode(dataFrame.GetPacketData(), out Wmr100Data wmr100Data);
 
                         if (success)
                         {

@@ -36,9 +36,9 @@ namespace WMR100.NET
 
             while (true)
             {
-                int dataFrameStartPos = -1;
+                var dataFrameStartPos = -1;
 
-                for (int i = 0; i < (bufferPos - 2); i++)
+                for (var i = 0; i < (bufferPos - 2); i++)
                 {
                     if (buffer[i] == Wmr100DataFrame.Delimiter && buffer[i + 1] == Wmr100DataFrame.Delimiter)
                     {
@@ -59,9 +59,9 @@ namespace WMR100.NET
                     InternalLog($"Ignored {dataFrameStartPos} byte(s) of data.");
                 }
 
-                int dataFrameEndPos = -1;
+                var dataFrameEndPos = -1;
 
-                for (int i = dataFrameStartPos + 2; i < (bufferPos - 2); i++)
+                for (var i = dataFrameStartPos + 2; i < (bufferPos - 2); i++)
                 {
                     if (buffer[i] == Wmr100DataFrame.Delimiter && buffer[i + 1] == Wmr100DataFrame.Delimiter)
                     {
@@ -76,7 +76,7 @@ namespace WMR100.NET
                     break; // Internal buffer does not contain enough data to assemble a data frame.
                 }
 
-                int len = dataFrameEndPos - dataFrameStartPos;
+                var len = dataFrameEndPos - dataFrameStartPos;
 
                 if (len == 0)
                 {
@@ -84,7 +84,7 @@ namespace WMR100.NET
                 }
                 else
                 {
-                    byte[] data = new byte[len];
+                    var data = new byte[len];
                     Array.Copy(buffer, dataFrameStartPos, data, 0, len);
                     InternalLog($"Found data frame: {ByteArrayUtils.ByteArrayToString(data)}");
                     dataFrames.Add(new Wmr100DataFrame(data));
