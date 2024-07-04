@@ -62,13 +62,13 @@ namespace WMR100.NET.ConsoleDemo
         {
             var hexFrameData = ByteArrayUtils.ByteArrayToString(e.FrameData);
 
-            if (e.ErrorType == DataFrameErrorType.InvalidDataFrameChecksum)
-            {
-                LogToConsole($"Bad data frame: {hexFrameData} (invalid checksum)");
-            }
-            else if (e.ErrorType == DataFrameErrorType.InvalidDataFrameLength)
+            if (e.ErrorType == DataFrameErrorType.InvalidDataFrameLength)
             {
                 LogToConsole($"Bad data frame: {hexFrameData} (invalid length)");
+            }
+            else if (e.ErrorType == DataFrameErrorType.InvalidDataFrameChecksum)
+            {
+                LogToConsole($"Bad data frame: {hexFrameData} (invalid checksum)");
             }
         }
 

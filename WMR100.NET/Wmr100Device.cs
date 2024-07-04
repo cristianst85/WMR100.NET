@@ -62,17 +62,17 @@ namespace WMR100.NET
 
                     foreach (var dataFrame in dataFrames)
                     {
+                        // Verify the frame length first.
+                        if (!dataFrame.IsLengthValid())
+                        {
+                            DataError?.Invoke(this, new DataFrameErrorEventArgs(dataFrame.Data, DataFrameErrorType.InvalidDataFrameLength));
+                            continue;
+                        }
+
                         // Verify frame checksum.
                         if (!dataFrame.IsChecksumValid())
                         {
                             DataError?.Invoke(this, new DataFrameErrorEventArgs(dataFrame.Data, DataFrameErrorType.InvalidDataFrameChecksum));
-                            continue;
-                        }
-
-                        // Verify frame length.
-                        if (!dataFrame.IsLengthValid())
-                        {
-                            DataError?.Invoke(this, new DataFrameErrorEventArgs(dataFrame.Data, DataFrameErrorType.InvalidDataFrameLength));
                             continue;
                         }
 
