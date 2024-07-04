@@ -52,7 +52,7 @@ namespace WMR100.NET
                 if (dataFrameStartPos > 0)
                 {
                     // Incomplete data frame at the beginning of the data stream.
-                    Debug.WriteLine($"Ignored {dataFrameStartPos} bytes(s).");
+                    Debug.WriteLine($"Ignored {dataFrameStartPos} byte(s).");
                 }
 
                 int dataFrameEndPos = -1;
