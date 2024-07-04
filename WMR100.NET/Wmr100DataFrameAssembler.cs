@@ -55,8 +55,8 @@ namespace WMR100.NET
 
                 if (dataFrameStartPos > 0)
                 {
-                    // Incomplete data frame at the beginning of the data stream.﻿
-                    InternalLog($"Ignored {dataFrameStartPos} byte(s).");
+                    // Incomplete data frame at the beginning of the data stream.
+                    InternalLog($"Ignored {dataFrameStartPos} byte(s) of data.");
                 }
 
                 int dataFrameEndPos = -1;
@@ -86,6 +86,7 @@ namespace WMR100.NET
                 {
                     byte[] data = new byte[len];
                     Array.Copy(buffer, dataFrameStartPos, data, 0, len);
+                    InternalLog($"Found data frame: {ByteArrayUtils.ByteArrayToString(data)}");
                     dataFrames.Add(new Wmr100DataFrame(data));
                 }
 
