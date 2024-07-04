@@ -26,7 +26,7 @@ namespace WMR100.NET.ConsoleDemo
 
                 wmr100Device.DataReceived += Wmr100Device_DataReceived;
                 wmr100Device.DataDecodeError += Wmr100Device_DataDecodeError;
-                wmr100Device.DataError += Wmr100Device_DataError;
+                wmr100Device.DataFrameError += Wmr100Device_DataFrameError;
                 wmr100Device.Error += Wmr100Device_Error;
 
                 LogToConsole("Receiving data...");
@@ -58,7 +58,7 @@ namespace WMR100.NET.ConsoleDemo
             }
         }
 
-        private static void Wmr100Device_DataError(object sender, DataFrameErrorEventArgs e)
+        private static void Wmr100Device_DataFrameError(object sender, DataFrameErrorEventArgs e)
         {
             var hexFrameData = ByteArrayUtils.ByteArrayToString(e.FrameData);
 
@@ -83,7 +83,7 @@ namespace WMR100.NET.ConsoleDemo
             wmr100Device.Stop();
             wmr100Device.DataReceived -= Wmr100Device_DataReceived;
             wmr100Device.DataDecodeError -= Wmr100Device_DataDecodeError;
-            wmr100Device.DataError -= Wmr100Device_DataError;
+            wmr100Device.DataFrameError -= Wmr100Device_DataFrameError;
             wmr100Device.Error -= Wmr100Device_Error;
 
             UsbDevice.UsbErrorEvent -= UsbDevice_UsbErrorEvent;

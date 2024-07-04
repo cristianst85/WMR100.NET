@@ -6,7 +6,7 @@ namespace WMR100.NET
     {
         event DataDecodeErrorEventHandler DataDecodeError;
 
-        event DataErrorEventHandler DataError;
+        event DataFrameErrorEventHandler DataFrameError;
 
         event DataReceivedEventHandler DataReceived;
 

@@ -8,7 +8,7 @@ namespace WMR100.NET
 
     public delegate void DataDecodeErrorEventHandler(object sender, DataDecodeErrorEventArgs e);
 
-    public delegate void DataErrorEventHandler(object sender, DataFrameErrorEventArgs e);
+    public delegate void DataFrameErrorEventHandler(object sender, DataFrameErrorEventArgs e);
 
     public class Wmr100Device : IWmr100Device, IDisposable
     {
@@ -26,7 +26,7 @@ namespace WMR100.NET
 
         public event DataReceivedEventHandler DataReceived;
         public event DataDecodeErrorEventHandler DataDecodeError;
-        public event DataErrorEventHandler DataError;
+        public event DataFrameErrorEventHandler DataFrameError;
         public event ErrorEventHandler Error;
 
         public static Wmr100Device Create()
@@ -65,14 +65,14 @@ namespace WMR100.NET
                         // Verify the frame length first.
                         if (!dataFrame.IsLengthValid())
                         {
-                            DataError?.Invoke(this, new DataFrameErrorEventArgs(dataFrame.Data, DataFrameErrorType.InvalidDataFrameLength));
+                            DataFrameError?.Invoke(this, new DataFrameErrorEventArgs(dataFrame.Data, DataFrameErrorType.InvalidDataFrameLength));
                             continue;
                         }
 
                         // Verify frame checksum.
                         if (!dataFrame.IsChecksumValid())
                         {
-                            DataError?.Invoke(this, new DataFrameErrorEventArgs(dataFrame.Data, DataFrameErrorType.InvalidDataFrameChecksum));
+                            DataFrameError?.Invoke(this, new DataFrameErrorEventArgs(dataFrame.Data, DataFrameErrorType.InvalidDataFrameChecksum));
                             continue;
                         }
 
