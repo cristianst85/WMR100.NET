@@ -34,6 +34,7 @@ namespace WMR100.NET
             if (Log != null)
             {
                 WmrUsbDevice.Log += (message) => Log(message);
+                Wmr100DataFrameAssembler.Log += (message) => Log(message);
             }
 
             return new Wmr100Device(WmrUsbDevice.Create(), new Wmr100DataFrameAssembler());

@@ -1,34 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
+using WMR100.NET.Helpers;
 
-namespace WMR100.NET
+namespace WMR100.NET﻿
 {
-    internal class Wmr100DataFrameAssembler
+    internal class Wmr100DataFrameAssembler﻿
     {
+        public static Action<string> Log;
+
         private readonly byte[] buffer = new byte[256];
         private int bufferPos = -1;
 
         public ICollection<Wmr100DataFrame> Assemble(byte[] usbDataBlock)
         {
+            InternalLog($"USB data block: {ByteArrayUtils.ByteArrayToString(usbDataBlock)}");
+
             var dataFrames = new Collection<Wmr100DataFrame>();
 
-            /// USB data is received in blocks that have a byte count and relevant data, 
-            /// padded out to 8 bytes. Depending on the USB interface software, this may 
-            /// be preceded by a report code byte (normally zero). The byte count indicates 
-            /// how many of the following bytes should be used as data (e.g. a count of 2 
-            /// means that only the following 2 bytes should be used). Input data from 
-            /// the weather station arrives in bursts roughly every minute, using data it
-            /// has previously accumulated.
-            /// Source: http://www.cs.stir.ac.uk/~kjt/software/comms/wmr180.html
-            /// or https://web.archive.org/web/20200107095622/https://www.cs.stir.ac.uk/~kjt/software/comms/wmr180.html
+            /// USB data is received in blocks that have a byte count and relevant data, ﻿
+﻿            /// padded out to 8 bytes. Depending on the USB interface software, this may ﻿
+﻿            /// be preceded by a report code byte (normally zero). The byte count indicates ﻿
+﻿            /// how many of the following bytes should be used as data (e.g. a count of 2 ﻿
+﻿            /// means that only the following 2 bytes should be used). Input data from ﻿
+﻿            /// the weather station arrives in bursts roughly every minute, using data it﻿
+﻿            /// has previously accumulated.﻿
+﻿            /// Source: http://www.cs.stir.ac.uk/~kjt/software/comms/wmr180.html﻿
+﻿            /// or https://web.archive.org/web/20200107095622/https://www.cs.stir.ac.uk/~kjt/software/comms/wmr180.html﻿
 
             Array.Copy(usbDataBlock, 1, buffer, bufferPos + 1, usbDataBlock[0]);
             bufferPos += usbDataBlock[0];
 
-            /// The data from these USB blocks needs to be concatenated into one input stream. 
-            /// Input frames are extracted from this stream, <seealso cref="Wmr100DataFrame"/>.
+            /// The data from these USB blocks needs to be concatenated into one input stream. ﻿
+            ﻿/// Input frames are extracted from this stream, <seealso cref="Wmr100DataFrame"/>.﻿
 
             while (true)
             {
@@ -45,14 +49,14 @@ namespace WMR100.NET
 
                 if (dataFrameStartPos < 0)
                 {
-                    Debug.WriteLine("Not enough data available.");
-                    break; // Internal buffer does not contain enough data to assemble a data frame.
+                    InternalLog("Not enough data available.");
+                    break; // Internal buffer does not contain enough data to assemble a data frame.﻿
                 }
 
                 if (dataFrameStartPos > 0)
                 {
-                    // Incomplete data frame at the beginning of the data stream.
-                    Debug.WriteLine($"Ignored {dataFrameStartPos} byte(s).");
+                    // Incomplete data frame at the beginning of the data stream.﻿
+                    InternalLog($"Ignored {dataFrameStartPos} byte(s).");
                 }
 
                 int dataFrameEndPos = -1;
@@ -68,15 +72,15 @@ namespace WMR100.NET
 
                 if (dataFrameEndPos < 0)
                 {
-                    Debug.WriteLine("Not enough data available.");
-                    break; // Internal buffer does not contain enough data to assemble a data frame.
+                    InternalLog("Not enough data available.");
+                    break; // Internal buffer does not contain enough data to assemble a data frame.﻿
                 }
 
                 int len = dataFrameEndPos - dataFrameStartPos;
 
                 if (len == 0)
                 {
-                    Debug.WriteLine("Ignored zero length data frame.");
+                    InternalLog("Ignored zero length data frame.");
                 }
                 else
                 {
@@ -91,6 +95,11 @@ namespace WMR100.NET
             }
 
             return dataFrames;
+        }
+
+        private static void InternalLog(string message)
+        {
+            Log?.Invoke(message);
         }
     }
 }
