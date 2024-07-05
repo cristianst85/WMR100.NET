@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>WMR100.NET</id>
-    <version>0.6.1</version>
+    <version>0.7.0</version>
     <title>WMR100.NET</title>
     <authors>Cristian Stoica</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
