@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
+using WMR100.NET.Helpers;
 
 namespace WMR100.NET
 {
@@ -48,7 +49,10 @@ namespace WMR100.NET
 
         public virtual void Init()
         {
+            InternalLog("Writing initialization request to device...");
             wmrUsbDevice.Write(initRequest);
+
+            InternalLog("Writing send data request to device...");
             wmrUsbDevice.Write(sendDataRequest);
         }
 
@@ -58,7 +62,11 @@ namespace WMR100.NET
             {
                 try
                 {
-                    var dataFrames = wmrDataFrameAssembler.Assemble(wmrUsbDevice.Read());
+                    InternalLog("Reading data from device...");
+                    var usbDataBlock = wmrUsbDevice.Read();
+
+                    InternalLog($"Read USB data block: {ByteArrayUtils.ByteArrayToString(usbDataBlock)}");
+                    var dataFrames = wmrDataFrameAssembler.Assemble(usbDataBlock);
 
                     foreach (var dataFrame in dataFrames)
                     {
@@ -88,6 +96,7 @@ namespace WMR100.NET
                         }
                     }
 
+                    InternalLog("Writing send data request to device...");
                     wmrUsbDevice.Write(sendDataRequest);
                 }
                 catch (Exception ex)
@@ -107,6 +116,11 @@ namespace WMR100.NET
         {
             Stop();
             wmrUsbDevice?.Dispose();
+        }
+
+        private static void InternalLog(string message)
+        {
+            Log?.Invoke(message);
         }
     }
 }

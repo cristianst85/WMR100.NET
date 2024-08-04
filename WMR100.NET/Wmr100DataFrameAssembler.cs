@@ -14,8 +14,6 @@ namespace WMR100.NET
 
         public ICollection<Wmr100DataFrame> Assemble(byte[] usbDataBlock)
         {
-            InternalLog($"USB data block: {ByteArrayUtils.ByteArrayToString(usbDataBlock)}");
-
             var dataFrames = new Collection<Wmr100DataFrame>();
 
             /// USB data is received in blocks that have a byte count and relevant data, 
