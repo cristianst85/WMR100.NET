@@ -88,10 +88,7 @@ namespace WMR100.NET
                         }
                     }
 
-                    if (dataFrames.Count > 0)
-                    {
-                        wmrUsbDevice.Write(sendDataRequest);
-                    }
+                    wmrUsbDevice.Write(sendDataRequest);
                 }
                 catch (Exception ex)
                 {
