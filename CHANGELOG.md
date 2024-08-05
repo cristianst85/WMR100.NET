@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## 0.7.1 (2024-08-05)
+
+- Improved the internal debug messages.
+- Removed unnecessary condition for sending data request. 
+
 ## 0.7.0 (2024-07-05)
 
 - Improved the handling of empty and mangled data frames that were causing IndexOutOfRangeException errors.
