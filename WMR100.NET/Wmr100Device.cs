@@ -96,8 +96,11 @@ namespace WMR100.NET
                         }
                     }
 
-                    InternalLog("Writing send data request to device...");
-                    wmrUsbDevice.Write(sendDataRequest);
+                    if (dataFrames.Count > 0)
+                    {
+                        InternalLog("Writing send data request to device...");
+                        wmrUsbDevice.Write(sendDataRequest);
+                    }
                 }
                 catch (Exception ex)
                 {
