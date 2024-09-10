@@ -1,9 +1,13 @@
 ﻿# Changelog
 
+## 0.7.2 (2024-09-10)
+
+- Fixed an issue that was causing occasional 'Writing control data to USB device failed' errors.
+
 ## 0.7.1 (2024-08-05)
 
 - Improved the internal debug messages.
-- Removed unnecessary condition for sending data request. 
+- Removed unnecessary condition for sending data request.
 
 ## 0.7.0 (2024-07-05)
 
